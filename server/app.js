@@ -3,7 +3,14 @@ const mongoose = require("mongoose");
 const express = require("express");
 const Patient = require("./models/patient.js");
 
+// express app
 const app = express();
+
+// middleware
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
+});
 
 mongoose
   .connect(process.env.DB_URL)
