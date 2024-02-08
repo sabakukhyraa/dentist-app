@@ -1,7 +1,17 @@
+import { createContext, useState } from "react";
+
+import TeethNumber from "./components/Teeth/SelectTeeth.jsx";
+export const StateContext = createContext({
+  toothState: null,
+});
+
 function App() {
+  const [toothState, setToothState] = useState("Soldan Seçiniz");
   return (
     <>
-      <h1>Vite + React</h1>
+      <StateContext.Provider value={{ toothState, setToothState }}>
+        <TeethNumber />{" "}
+      </StateContext.Provider>
     </>
   );
 }

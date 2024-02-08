@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.choisable-tooth {
+  @apply fill-transparent stroke-sky-900 transition-colors !duration-1000 !ease-in-out;
+}
