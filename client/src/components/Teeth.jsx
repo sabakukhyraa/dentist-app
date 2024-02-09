@@ -2,9 +2,40 @@ import { teethAttributes } from "../services/teethData.js";
 import { useState } from "react";
 import deleteObjectsWithParentIndex from "../services/deleteObjects.js";
 
-// eslint-disable-next-line react/prop-types
-export default function Teeth({ hasWisdomTeeth, isAdult }) {
+export default function Teeth({ hasWisdomTeeth, isAdult, definedTeeth }) {
   const [toothState, setToothState] = useState(0);
+
+  // [
+  //  {
+  //   toothNumber: 13,
+  //   description: String,
+  //   treatmentsBefore: Array,
+  //  },
+  //  {
+  //   toothNumber: 26,
+  //   description: String,
+  //   treatmentsBefore: Array,
+  //  },
+  // ]
+
+  function findIsDefined(toothNumber) {
+    let isDefined = false;
+    definedTeeth.forEach((obj) => {
+      if (obj.toothNumber === toothNumber) {
+        isDefined = true;
+      }
+    });
+
+    return isDefined;
+  }
+
+  function handleToothClick(toothNumber) {
+    setToothState(toothNumber);
+
+    // if (isDefined) {
+    // } else {
+    // }
+  }
 
   const adultTeeth = teethAttributes.slice(0, 32);
   const childTeeth = teethAttributes.slice(32);
@@ -36,9 +67,13 @@ export default function Teeth({ hasWisdomTeeth, isAdult }) {
     return (
       <svg
         key={index}
-        onClick={() => setToothState(tooth.parentIndex)}
+        onClick={() => handleToothClick(tooth.parentIndex)}
         className={`choisable-tooth cursor-pointer ${
           toothState == tooth.parentIndex && "!fill-sky-500"
+        } ${
+          findIsDefined(tooth.parentIndex)
+            ? "fill-emerald-500"
+            : "fill-transparent"
         }`}
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
