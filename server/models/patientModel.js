@@ -8,14 +8,14 @@ const toothSchema = new Schema({
     type: Number,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   // Can create Treatment Schema for this particular property as an array [treatmentSchema] later.
   treatmentsBefore: {
     type: Array,
     required: false,
-  },
-  description: {
-    type: String,
-    required: true,
   },
 });
 
@@ -29,13 +29,13 @@ const patientSchema = new Schema(
       type: Date,
       required: true,
     },
-    hasWisdomTeeth: {
-      type: Boolean,
-      required: true,
-    },
     isAdult: {
       type: Boolean,
       required: true,
+    },
+    hasWisdomTeeth: {
+      type: Boolean,
+      required: false,
     },
     definedTeeth: [toothSchema],
   },
