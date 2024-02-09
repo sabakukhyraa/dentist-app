@@ -1,41 +1,39 @@
-export default function DefineTooth({ toothNumber, toothData }) {
+export default function DefineTooth({
+  toothNumber,
+  toothDescription,
+  toothTreatmentsBefore,
+}) {
+  const treatments = toothTreatmentsBefore.map((treat, index) => {
+    return (
+      <div key={index}>
+        <label htmlFor={`treatment-name-${index}`}>Treatment {index}</label>
+        <input
+          type="text"
+          name={`treatment-name-${index}`}
+          id={`treatment-name-${index}`}
+          value={treat}
+        />
+        <button>Remove</button>
+      </div>
+    );
+  });
   return (
     <div>
       <div>Tooth Number: {toothNumber}</div>
       <div>
         <label htmlFor="description">Description: </label>
-        <textarea
+        <input
+          type="text"
           name="description"
           id="description"
-          cols="30"
-          rows="10"
-        ></textarea>
+          value={toothDescription || ""}
+        />
       </div>
       <div>
         <h2>Treatments applied to {toothNumber}</h2>
-        <div>
-          <label htmlFor="treatment-name-1">Treatment 1</label>
-          <input
-            type="text"
-            name="treatment-name-1"
-            id="treatment-name-1"
-            value={"Implant"}
-          />
-          <button>Remove</button>
-        </div>
-        <div>
-          <label htmlFor="treatment-name-2">Treatment 2</label>
-          <input
-            type="text"
-            name="treatment-name-2"
-            id="treatment-name-2"
-            value={"Whitening"}
-          />
-          <button>Remove</button>
-        </div>
+        {treatments}
         <button>Add Treatment</button>
       </div>
-      <div>{toothData}</div>
     </div>
   );
 }
