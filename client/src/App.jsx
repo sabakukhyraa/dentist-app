@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-import TeethNumber from "./components/Teeth/SelectTeeth.jsx";
+import PatientInfo from "./components/PatientInfo.jsx";
 export const StateContext = createContext({
   toothState: null,
 });
@@ -10,7 +10,9 @@ function App() {
   return (
     <>
       <StateContext.Provider value={{ toothState, setToothState }}>
-        <TeethNumber />{" "}
+        <div className="w-full flex flex-col items-center">
+          <PatientInfo />
+        </div>
       </StateContext.Provider>
     </>
   );

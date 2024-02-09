@@ -1,10 +1,26 @@
-import { teethAttributes } from "../../services/teethData.js";
+import { teethAttributes } from "../services/teethData.js";
 import { useState } from "react";
+import deleteObjectsWithParentIndex from "../services/deleteObjects.js";
 
-export default function Teeth() {
+// eslint-disable-next-line react/prop-types
+export default function Teeth({ hasWisdomTeeth, isAdult }) {
   const [toothState, setToothState] = useState(0);
 
-  const teeth = teethAttributes.map((tooth, index) => {
+  const adultTeeth = teethAttributes.slice(0, 32);
+  const childTeeth = teethAttributes.slice(32);
+
+  const teethWithoutWisdom = deleteObjectsWithParentIndex(
+    adultTeeth,
+    [18, 28, 38, 48]
+  );
+
+  const teethData = isAdult
+    ? hasWisdomTeeth
+      ? adultTeeth
+      : teethWithoutWisdom
+    : childTeeth;
+
+  const teeth = teethData.map((tooth, index) => {
     const pathMap = tooth.path.map((path, i) => {
       return (
         <path

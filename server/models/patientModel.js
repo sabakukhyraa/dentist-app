@@ -29,6 +29,14 @@ const patientSchema = new Schema(
       type: Date,
       required: true,
     },
+    hasWisdomTeeth: {
+      type: Boolean,
+      required: true,
+    },
+    isAdult: {
+      type: Boolean,
+      required: true,
+    },
     definedTeeth: [toothSchema],
   },
   { timestamps: true }
