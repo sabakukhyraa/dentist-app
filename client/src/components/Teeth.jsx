@@ -10,19 +10,6 @@ export default function Teeth({ hasWisdomTeeth, isAdult, definedTeeth }) {
   const [toothDescription, setToothDescription] = useState(null);
   const [toothTreatmentsBefore, setToothTreatmentsBefore] = useState(null);
 
-  // [
-  //  {
-  //   toothNumber: 13,
-  //   description: String,
-  //   treatmentsBefore: Array,
-  //  },
-  //  {
-  //   toothNumber: 26,
-  //   description: String,
-  //   treatmentsBefore: Array,
-  //  },
-  // ]
-
   function findIsDefined(toothNumber) {
     let isDefined = false;
     definedTeeth.forEach((obj) => {
@@ -113,10 +100,10 @@ export default function Teeth({ hasWisdomTeeth, isAdult, definedTeeth }) {
             toothNumber={toothState}
             toothDescription={toothDescription}
             toothTreatmentsBefore={toothTreatmentsBefore}
+            setIsModalOpen={setIsModalOpen}
           />
         )}
       </div>
-      <div>{toothState}</div>
     </>
   );
 }
