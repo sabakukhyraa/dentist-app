@@ -36,7 +36,6 @@ function App() {
                 definedTeeth={selectedPatient?.definedTeeth}
                 saveDate={selectedPatient?.createdAt}
                 changeDate={selectedPatient?.updatedAt}
-                selectedPatient={selectedPatient}
               />
             }
           />
