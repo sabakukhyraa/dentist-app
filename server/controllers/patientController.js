@@ -32,10 +32,10 @@ const getPatient = async (req, res) => {
 // CREATE a new patient
 const createPatient = async (req, res) => {
   try {
-    const { name, birthDate, definedTeeth } = req.body;
+    const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth } = req.body;
 
     // Verify data from request
-    if (!name || !birthDate || !definedTeeth) {
+    if (!name || !birthDate || !definedTeeth || !isAdult) {
       return res.status(400).json({ message: "Eksik bilgi." });
     }
 
@@ -43,11 +43,18 @@ const createPatient = async (req, res) => {
       name, // this is same as "name: name",
       birthDate, // this is same as "birthDate: birthDate",
       definedTeeth: [], // empty array
+      isAdult,
+      hasWisdomTeeth: !!hasWisdomTeeth,
     });
 
     // fill the empty array with data from front request
     definedTeeth.forEach((toothData) => {
-      const { toothNumber, treatmentsBefore, description } = toothData;
+      const {
+        toothNumber,
+        treatmentsBefore,
+        description,
+      } = toothData;
+
       if (toothNumber && description) {
         newPatient.definedTeeth.push({
           toothNumber,
