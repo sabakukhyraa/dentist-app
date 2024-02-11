@@ -1,11 +1,13 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
+const cors = require("cors");
 const Patient = require("./models/patientModel.js");
 const patientRoutes = require("./routes/patients.js");
 
 // express app
 const app = express();
+app.use(cors())
 
 // middleware
 app.use(express.json());
