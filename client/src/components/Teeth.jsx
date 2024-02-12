@@ -3,7 +3,13 @@ import { useState } from "react";
 import deleteObjectsWithParentIndex from "../services/deleteObjects.js";
 import DefineTooth from "./DefineTooth.jsx";
 
-export default function Teeth({ hasWisdomTeeth, isAdult, definedTeeth }) {
+export default function Teeth({
+  hasWisdomTeeth,
+  isAdult,
+  definedTeeth,
+  isForm = false,
+  handleInputChange = null,
+}) {
   const [toothState, setToothState] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -69,7 +75,7 @@ export default function Teeth({ hasWisdomTeeth, isAdult, definedTeeth }) {
         key={index}
         onClick={() => handleToothClick(tooth.parentIndex)}
         className={`choisable-tooth cursor-pointer ${
-          toothState == tooth.parentIndex && "!fill-sky-500"
+          toothState == tooth.parentIndex ? "!fill-sky-500" : ""
         } ${
           findIsDefined(tooth.parentIndex)
             ? "fill-emerald-500"
@@ -101,6 +107,9 @@ export default function Teeth({ hasWisdomTeeth, isAdult, definedTeeth }) {
             toothDescription={toothDescription}
             toothTreatmentsBefore={toothTreatmentsBefore}
             setIsModalOpen={setIsModalOpen}
+            setToothState={setToothState}
+            isForm={isForm}
+            handleInputChange={handleInputChange}
           />
         )}
       </div>

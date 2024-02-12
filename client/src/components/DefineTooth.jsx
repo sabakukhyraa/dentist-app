@@ -1,13 +1,21 @@
-export default function DefineTooth({ toothNumber, toothDescription, toothTreatmentsBefore, setIsModalOpen, }) {
-
-
+export default function DefineTooth({
+  toothNumber,
+  toothDescription,
+  toothTreatmentsBefore,
+  setIsModalOpen,
+  setToothState,
+  isForm = false,
+  handleInputChange = null,
+}) {
   const treatments = toothTreatmentsBefore.map((treat, index) => {
     return (
-      <li className="flex justify-between border p-1" key={index}>
+      <li className="flex justify-between p-1 border" key={index}>
         <div>
-          <label className="mr-4" htmlFor={`treatment-name-${index}`}>Treatment {index}</label>
+          <label className="mr-4" htmlFor={`treatment-name-${index}`}>
+            Treatment {index}
+          </label>
           <input
-            className="outline-none border px-2 py-1"
+            className="px-2 py-1 border outline-none"
             type="text"
             name={`treatment-name-${index}`}
             id={`treatment-name-${index}`}
@@ -19,12 +27,14 @@ export default function DefineTooth({ toothNumber, toothDescription, toothTreatm
     );
   });
 
+  function closeModal() {
+    setToothState(null);
+    setIsModalOpen(false);
+  }
+
   return (
     <div className="flex flex-col gap-4 text-xl">
-      <button
-        className="text-3xl self-end"
-        onClick={() => setIsModalOpen(false)}
-      >
+      <button className="self-end text-3xl" onClick={closeModal}>
         X
       </button>
       <div className="text-3xl">Tooth Number: {toothNumber}</div>
@@ -33,21 +43,21 @@ export default function DefineTooth({ toothNumber, toothDescription, toothTreatm
           Description:{" "}
         </label>
         <textarea
-          className="w-full border px-2"
+          className="w-full px-2 border"
           type="text"
           name="description"
           id="description"
           rows={4}
           value={toothDescription || ""}
+          onChange={handleInputChange}
         />
       </div>
-      <div className="flex flex-col gap-4 border rounded p-4 px-2">
-        <h2 className="text-3xl">
-          Treatments applied before
-        </h2>
-        <ul className="flex flex-col gap-2 w-full">{treatments}</ul>
+      <div className="flex flex-col gap-4 p-4 px-2 border rounded">
+        <h2 className="text-3xl">Treatments applied before</h2>
+        <ul className="flex flex-col w-full gap-2">{treatments}</ul>
         <button>Add Treatment</button>
       </div>
+      {isForm && <button>Save the tooth data</button>}
     </div>
   );
 }
