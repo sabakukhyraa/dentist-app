@@ -10,15 +10,37 @@ export default function NewPatient() {
     definedTeeth: [],
   });
 
-const handleInputChange = (event) => {
-  const { name, value, type, checked } = event.target;
-  const newValue = type === "checkbox" ? checked : value;
+  const handleInputChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    const newValue = type === "checkbox" ? checked : value;
 
-  setFormData((old) => ({
-    ...old,
-    [name]: newValue,
-  }));
-};
+    setFormData((old) => ({
+      ...old,
+      [name]: newValue,
+    }));
+  };
+  
+  const handleToothDefine = (value, toothNumber) => {
+    const theTooth = formData.definedTeeth.find(obj => toothNumber == obj.toothNumber)
+    if (theTooth) {
+      const updatedTeeth = formData.definedTeeth.map((obj) =>
+        obj.toothNumber === toothNumber ? { ...obj, description: value } : obj
+      );
+      setFormData((old) => ({
+        ...old,
+        definedTeeth: updatedTeeth,
+      }));
+    } else {
+      setFormData((old) => ({
+        ...old,
+        definedTeeth: [...old.definedTeeth, {
+          toothNumber: toothNumber,
+          description: value,
+          treatmentsBefore: []
+        }],
+      }));
+    }
+  }; 
 
 
   return (
@@ -72,7 +94,7 @@ const handleInputChange = (event) => {
         isAdult={formData.isAdult}
         definedTeeth={formData.definedTeeth}
         isForm={true}
-        handleInputChange={handleInputChange}
+        handleToothDefine={handleToothDefine}
       />
     </form>
   );

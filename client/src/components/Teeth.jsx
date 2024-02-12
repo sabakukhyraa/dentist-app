@@ -8,13 +8,11 @@ export default function Teeth({
   isAdult,
   definedTeeth,
   isForm = false,
-  handleInputChange = null,
+  handleToothDefine = null,
 }) {
   const [toothState, setToothState] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [toothDescription, setToothDescription] = useState(null);
-  const [toothTreatmentsBefore, setToothTreatmentsBefore] = useState(null);
 
   function findIsDefined(toothNumber) {
     let isDefined = false;
@@ -27,20 +25,13 @@ export default function Teeth({
     return isDefined;
   }
 
+  const virtualToothData = definedTeeth.find(
+    (obj) => obj.toothNumber == toothState
+  );
+
   function handleToothClick(toothNumber) {
     setIsModalOpen(true);
     setToothState(toothNumber);
-
-    if (findIsDefined(toothNumber)) {
-      const virtualToothData = definedTeeth.find(
-        (obj) => obj.toothNumber == toothNumber
-      );
-      setToothDescription(virtualToothData.description);
-      setToothTreatmentsBefore(virtualToothData.treatmentsBefore);
-    } else {
-      setToothDescription("");
-      setToothTreatmentsBefore([]);
-    }
   }
 
   const adultTeeth = teethAttributes.slice(0, 32);
@@ -104,12 +95,16 @@ export default function Teeth({
         {isModalOpen && (
           <DefineTooth
             toothNumber={toothState}
-            toothDescription={toothDescription}
-            toothTreatmentsBefore={toothTreatmentsBefore}
+            toothDescription={
+              virtualToothData ? virtualToothData.description : ""
+            }
+            toothTreatmentsBefore={
+              virtualToothData ? virtualToothData.treatmentsBefore : []
+            }
             setIsModalOpen={setIsModalOpen}
             setToothState={setToothState}
             isForm={isForm}
-            handleInputChange={handleInputChange}
+            handleToothDefine={handleToothDefine}
           />
         )}
       </div>

@@ -5,7 +5,7 @@ export default function DefineTooth({
   setIsModalOpen,
   setToothState,
   isForm = false,
-  handleInputChange = null,
+  handleToothDefine = null,
 }) {
   const treatments = toothTreatmentsBefore.map((treat, index) => {
     return (
@@ -32,6 +32,10 @@ export default function DefineTooth({
     setIsModalOpen(false);
   }
 
+  function handleInput(event) {
+    handleToothDefine(event.target.value, toothNumber)
+  }
+
   return (
     <div className="flex flex-col gap-4 text-xl">
       <button className="self-end text-3xl" onClick={closeModal}>
@@ -49,7 +53,7 @@ export default function DefineTooth({
           id="description"
           rows={4}
           value={toothDescription || ""}
-          onChange={handleInputChange}
+          onChange={handleInput}
         />
       </div>
       <div className="flex flex-col gap-4 p-4 px-2 border rounded">
