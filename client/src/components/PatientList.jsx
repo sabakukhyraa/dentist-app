@@ -16,5 +16,5 @@ export default function PatientList({ patientName, patientId, setSelectedPatient
     }
   };
 
-  return <li onClick={fetchPatient}>{patientName}</li>;
+  return <li className="w-full p-2 text-center transition-all duration-300 ease-in-out border-t-2 cursor-pointer border-x-2 hover:bg-sky-500 hover:text-white" onClick={fetchPatient}>{patientName}</li>;
 }
