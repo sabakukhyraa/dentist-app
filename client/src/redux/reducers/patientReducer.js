@@ -30,7 +30,15 @@ export const patientSlice = createSlice({
       state.hasWisdomTeeth = !state.hasWisdomTeeth;
     },
     addDefinedTeeth: (state, action) => {
-      state.definedTeeth = [...state.definedTeeth, action.payload];
+      let isDefined = state.definedTeeth.find(
+        (obj) => obj.toothNumber === action.payload.toothNumber
+      );
+      if (isDefined) {
+        let index = state.definedTeeth.indexOf(isDefined);
+        state.definedTeeth[index] = action.payload;
+      } else {
+        state.definedTeeth = [...state.definedTeeth, action.payload];
+      }
     },
   },
 });
