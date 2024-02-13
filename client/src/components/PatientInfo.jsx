@@ -4,7 +4,6 @@ import Teeth from "./Teeth.jsx";
 export default function PatientInfo() {
 
   const patient = useSelector(state => state.patient)
-  console.log(patient)
   return (
     <div className="flex flex-col items-start w-1/2 gap-6">
       <div className="mb-12">

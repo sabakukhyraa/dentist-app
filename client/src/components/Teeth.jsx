@@ -3,7 +3,11 @@ import { useState } from "react";
 import deleteObjectsWithParentIndex from "../services/deleteObjects.js";
 import DefineTooth from "./DefineTooth.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { setToothNumber } from "../redux/reducers/definedToothReducer.js";
+import {
+  setDefinedTooth,
+  setToothNumber,
+  resetState,
+} from "../redux/reducers/definedToothReducer.js";
 
 export default function Teeth({isForm = false}) {
 
@@ -14,20 +18,18 @@ export default function Teeth({isForm = false}) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function findIsDefined(toothNumber) {
-    let isDefined = false;
-    patient.definedTeeth.forEach((obj) => {
-      if (obj.toothNumber === toothNumber) {
-        isDefined = true;
-      }
-    });
-
-    return isDefined;
+  function findDefined(toothNumber) {
+    return patient.definedTeeth.find((obj) => obj.toothNumber === toothNumber);
   }
 
   function handleToothClick(toothNumber) {
+    if (findDefined(toothNumber)) {
+      dispatch(setDefinedTooth(findDefined(toothNumber)));
+    } else {
+      dispatch(resetState());
+      dispatch(setToothNumber(toothNumber));
+    }
     setIsModalOpen(true);
-    dispatch(setToothNumber(toothNumber))
     setToothState(toothNumber);
   }
 
@@ -65,7 +67,7 @@ export default function Teeth({isForm = false}) {
         className={`choisable-tooth cursor-pointer ${
           toothState == tooth.parentIndex ? "!fill-sky-500" : ""
         } ${
-          findIsDefined(tooth.parentIndex)
+          findDefined(tooth.parentIndex)
             ? "fill-emerald-500"
             : "fill-transparent"
         }`}

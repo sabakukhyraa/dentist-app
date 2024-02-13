@@ -1,12 +1,15 @@
+import { useDispatch, useSelector } from "react-redux";
+import { setDescription } from "../redux/reducers/definedToothReducer";
+import { addDefinedTeeth } from "../redux/reducers/patientReducer";
 export default function DefineTooth({
-  toothNumber,
-  toothDescription,
-  toothTreatmentsBefore,
   setIsModalOpen,
   setToothState,
   isForm = false,
 }) {
-  const treatments = toothTreatmentsBefore.map((treat, index) => {
+  const definedTooth = useSelector((state) => state.definedTooth);
+  const dispatch = useDispatch();
+
+  const treatments = definedTooth.treatmentsBefore.map((treat, index) => {
     return (
       <li className="flex justify-between p-1 border" key={index}>
         <div>
@@ -26,6 +29,11 @@ export default function DefineTooth({
     );
   });
 
+  function handleInput(event) {
+    dispatch(setDescription(event.target.value));
+    dispatch(addDefinedTeeth(definedTooth));
+  }
+
   function closeModal() {
     setToothState(null);
     setIsModalOpen(false);
@@ -36,7 +44,7 @@ export default function DefineTooth({
       <button className="self-end text-3xl" onClick={closeModal}>
         X
       </button>
-      <div className="text-3xl">Tooth Number: {toothNumber}</div>
+      <div className="text-3xl">Tooth Number: {definedTooth.toothNumber}</div>
       <div className="flex gap-4">
         <label className="" htmlFor="description">
           Description:{" "}
@@ -47,7 +55,7 @@ export default function DefineTooth({
           name="description"
           id="description"
           rows={4}
-          value={toothDescription || ""}
+          value={definedTooth.description}
           onChange={handleInput}
         />
       </div>
