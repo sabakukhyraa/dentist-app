@@ -6,12 +6,17 @@ const initialState = {
   isAdult: true,
   hasWisdomTeeth: true,
   definedTeeth: [],
+  updatedAt: null,
+  createdAt: null,
 };
 
 export const patientSlice = createSlice({
   name: "patient",
   initialState,
   reducers: {
+    setState: (state, action) => {
+      return action.payload
+    },
     setName: (state, action) => {
       state.name = action.payload;
     },
@@ -31,9 +36,12 @@ export const patientSlice = createSlice({
 });
 
 export const {
+  setState,
   setName,
   setBirthDate,
   toggleIsAdult,
   toggleHasWisdomTeeth,
   addDefinedTeeth,
 } = patientSlice.actions;
+
+export default patientSlice.reducer;
