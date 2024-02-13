@@ -3,12 +3,13 @@ import PatientInfo from "./components/PatientInfo.jsx";
 import PatientList from "./components/PatientList.jsx";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import NewPatient from "./components/NewPatient.jsx";
+import { useSelector } from "react-redux";
 
 function App() {
   const [patients, setPatients] = useState([]);
-  const [selectedPatient, setSelectedPatient] = useState(null);
   const [searchKey, setSearchKey] = useState("");
 
+  const patient = useSelector(state => state.patient);
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -23,8 +24,8 @@ function App() {
     fetchPatients();
   }, []);
 
-  const filteredPatients = patients.filter((patient) =>
-    patient.name.toLowerCase().includes(searchKey.toLowerCase())
+  const filteredPatients = patients.filter((p) =>
+    p.name.toLowerCase().includes(searchKey.toLowerCase())
   );
 
   return (
@@ -35,13 +36,13 @@ function App() {
             path="/patient"
             element={
               <PatientInfo
-                name={selectedPatient?.name}
-                birthDate={selectedPatient?.birthDate}
-                isAdult={selectedPatient?.isAdult}
-                hasWisdomTeeth={selectedPatient?.hasWisdomTeeth}
-                definedTeeth={selectedPatient?.definedTeeth}
-                saveDate={selectedPatient?.createdAt}
-                changeDate={selectedPatient?.updatedAt}
+                name={patient?.name}
+                birthDate={patient?.birthDate}
+                isAdult={patient?.isAdult}
+                hasWisdomTeeth={patient?.hasWisdomTeeth}
+                definedTeeth={patient?.definedTeeth}
+                saveDate={patient?.createdAt}
+                changeDate={patient?.updatedAt}
               />
             }
           />
@@ -63,12 +64,11 @@ function App() {
                 </div>
                 <ul className="w-full border-b-2">
                   {patients &&
-                    filteredPatients.map((patient) => (
+                    filteredPatients.map((p) => (
                       <PatientList
-                        key={patient._id}
-                        patientName={patient.name}
-                        patientId={patient._id}
-                        setSelectedPatient={setSelectedPatient}
+                        key={p._id}
+                        patientName={p.name}
+                        patientId={p._id}
                       />
                     ))}
                 </ul>

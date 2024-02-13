@@ -1,6 +1,11 @@
+import { useDispatch, useSelector } from "react-redux";
+import { setBirthDate, setName, toggleHasWisdomTeeth, toggleIsAdult } from "../redux/reducers/patientReducer.js";
 import Teeth from "./Teeth.jsx";
 
 export default function NewPatient() {
+
+  const patient = useSelector(state => state.patient)
+  const dispatch = useDispatch();
 
   return (
     <form>
@@ -10,8 +15,8 @@ export default function NewPatient() {
           type="text"
           name="name"
           id="name"
-          value={formData.name}
-          onChange={handleInputChange}
+          value={patient.name}
+          onChange={(e) => dispatch(setName(e.target.value))}
         />
       </div>
       <div>
@@ -20,8 +25,8 @@ export default function NewPatient() {
           type="date"
           name="birthDate"
           id="birthDate"
-          value={formData?.birthDate}
-          onChange={handleInputChange}
+          value={patient.birthDate}
+          onChange={(e) => dispatch(setBirthDate(e.target.value))}
         />
       </div>
       <div>
@@ -30,12 +35,12 @@ export default function NewPatient() {
           type="checkbox"
           name="isAdult"
           id="isAdult"
-          checked={formData.isAdult}
-          value={formData.isAdult}
-          onChange={handleInputChange}
+          checked={patient.isAdult}
+          value={patient.isAdult}
+          onChange={(e) => dispatch(toggleIsAdult(e.target.value))}
         />
       </div>
-      <div className={`${!formData.isAdult && "hidden"}`}>
+      <div className={`${!patient.isAdult && "hidden"}`}>
         <label htmlFor="hasWisdomTeeth">
           Does the patient have wisdom teeth?:
         </label>
@@ -43,17 +48,12 @@ export default function NewPatient() {
           type="checkbox"
           name="hasWisdomTeeth"
           id="hasWisdomTeeth"
-          checked={formData.hasWisdomTeeth}
-          value={formData.hasWisdomTeeth}
-          onChange={handleInputChange}
+          checked={patient.hasWisdomTeeth}
+          value={patient.hasWisdomTeeth}
+          onChange={(e) => dispatch(toggleHasWisdomTeeth(e.target.value))}
         />
       </div>
-      <Teeth
-        hasWisdomTeeth={formData.hasWisdomTeeth}
-        isAdult={formData.isAdult}
-        definedTeeth={formData.definedTeeth}
-        isForm={true}
-      />
+      <Teeth isForm={true}/>
     </form>
   );
 }

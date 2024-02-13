@@ -2,20 +2,21 @@ import { teethAttributes } from "../services/teethData.js";
 import { useState } from "react";
 import deleteObjectsWithParentIndex from "../services/deleteObjects.js";
 import DefineTooth from "./DefineTooth.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { setToothNumber } from "../redux/reducers/definedToothReducer.js";
 
-export default function Teeth({
-  hasWisdomTeeth,
-  isAdult,
-  definedTeeth,
-  isForm = false,
-}) {
+export default function Teeth({isForm = false}) {
+
+  const dispatch = useDispatch();
+  const patient = useSelector((state) => state.patient)
+
   const [toothState, setToothState] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function findIsDefined(toothNumber) {
     let isDefined = false;
-    definedTeeth.forEach((obj) => {
+    patient.definedTeeth.forEach((obj) => {
       if (obj.toothNumber === toothNumber) {
         isDefined = true;
       }
@@ -24,12 +25,9 @@ export default function Teeth({
     return isDefined;
   }
 
-  const virtualToothData = definedTeeth.find(
-    (obj) => obj.toothNumber == toothState
-  );
-
   function handleToothClick(toothNumber) {
     setIsModalOpen(true);
+    dispatch(setToothNumber(toothNumber))
     setToothState(toothNumber);
   }
 
@@ -41,8 +39,8 @@ export default function Teeth({
     [18, 28, 38, 48]
   );
 
-  const teethData = isAdult
-    ? hasWisdomTeeth
+  const teethData = patient.isAdult
+    ? patient.hasWisdomTeeth
       ? adultTeeth
       : teethWithoutWisdom
     : childTeeth;
@@ -93,13 +91,6 @@ export default function Teeth({
         </svg>{" "}
         {isModalOpen && (
           <DefineTooth
-            toothNumber={toothState}
-            toothDescription={
-              virtualToothData ? virtualToothData.description : ""
-            }
-            toothTreatmentsBefore={
-              virtualToothData ? virtualToothData.treatmentsBefore : []
-            }
             setIsModalOpen={setIsModalOpen}
             setToothState={setToothState}
             isForm={isForm}

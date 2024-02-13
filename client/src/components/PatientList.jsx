@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom"
-
-export default function PatientList({ patientName, patientId, setSelectedPatient }) {
+import { setState } from "../redux/reducers/patientReducer";
+import { useDispatch } from "react-redux";
+export default function PatientList({ patientName, patientId }) {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const fetchPatient = async () => {
     const response = await fetch(
@@ -11,7 +13,7 @@ export default function PatientList({ patientName, patientId, setSelectedPatient
     const json = await response.json();
 
     if (response.ok) {
-      await setSelectedPatient(json);
+      dispatch(setState(json));
       navigate("/patient");
     }
   };

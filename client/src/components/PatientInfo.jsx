@@ -1,28 +1,22 @@
+import { useSelector } from "react-redux";
 import Teeth from "./Teeth.jsx";
 
-export default function PatientInfo({
-  name,
-  birthDate,
-  isAdult,
-  hasWisdomTeeth,
-  definedTeeth,
-  saveDate,
-  changeDate,
-}) {
+export default function PatientInfo() {
+
+  const patient = useSelector(state => state.patient)
+  console.log(patient)
   return (
     <div className="flex flex-col items-start w-1/2 gap-6">
       <div className="mb-12">
-        <h1 className="text-3xl text-center">{name}</h1>
-        <p className="text-center">Birthdate: {birthDate}</p>
+        <h1 className="text-3xl text-center">{patient.name}</h1>
+        <p className="text-center">Birthdate: {patient.birthDate}</p>
       </div>
-      <Teeth
-        isAdult={isAdult}
-        hasWisdomTeeth={hasWisdomTeeth}
-        definedTeeth={definedTeeth}
-      />
+      <Teeth />
       <div className="self-end text-xs italic">
-        <p>Patient Information Recording Date: {saveDate}</p>
-        <p>Last Modification Date of Patient Information: {changeDate}</p>
+        <p>Patient Information Recording Date: {patient.createdAt}</p>
+        <p>
+          Last Modification Date of Patient Information: {patient.updatedAt}
+        </p>
       </div>
     </div>
   );
