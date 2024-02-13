@@ -8,7 +8,6 @@ export default function Teeth({
   isAdult,
   definedTeeth,
   isForm = false,
-  handleToothDefine = null,
 }) {
   const [toothState, setToothState] = useState(0);
 
@@ -104,7 +103,6 @@ export default function Teeth({
             setIsModalOpen={setIsModalOpen}
             setToothState={setToothState}
             isForm={isForm}
-            handleToothDefine={handleToothDefine}
           />
         )}
       </div>

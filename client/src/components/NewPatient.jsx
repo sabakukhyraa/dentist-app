@@ -1,47 +1,6 @@
-import { useState } from "react";
 import Teeth from "./Teeth.jsx";
 
 export default function NewPatient() {
-  const [formData, setFormData] = useState({
-    name: "",
-    birthDate: "",
-    isAdult: true,
-    hasWisdomTeeth: false,
-    definedTeeth: [],
-  });
-
-  const handleInputChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    const newValue = type === "checkbox" ? checked : value;
-
-    setFormData((old) => ({
-      ...old,
-      [name]: newValue,
-    }));
-  };
-  
-  const handleToothDefine = (value, toothNumber) => {
-    const theTooth = formData.definedTeeth.find(obj => toothNumber == obj.toothNumber)
-    if (theTooth) {
-      const updatedTeeth = formData.definedTeeth.map((obj) =>
-        obj.toothNumber === toothNumber ? { ...obj, description: value } : obj
-      );
-      setFormData((old) => ({
-        ...old,
-        definedTeeth: updatedTeeth,
-      }));
-    } else {
-      setFormData((old) => ({
-        ...old,
-        definedTeeth: [...old.definedTeeth, {
-          toothNumber: toothNumber,
-          description: value,
-          treatmentsBefore: []
-        }],
-      }));
-    }
-  }; 
-
 
   return (
     <form>
@@ -94,7 +53,6 @@ export default function NewPatient() {
         isAdult={formData.isAdult}
         definedTeeth={formData.definedTeeth}
         isForm={true}
-        handleToothDefine={handleToothDefine}
       />
     </form>
   );
