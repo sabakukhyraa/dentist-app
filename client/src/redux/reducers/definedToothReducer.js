@@ -11,16 +11,21 @@ export const definedToothSlice = createSlice({
   initialState,
   reducers: {
     setToothNumber: (state, action) => {
-      state.toothNumber = action.payload
+      state.toothNumber = action.payload;
     },
     setDescription: (state, action) => {
-      state.description = action.payload
+      state.description = action.payload;
     },
     addTreatment: (state, action) => {
       state.treatmentsBefore.push(action.payload);
     },
     removeTreatment: (state, action) => {
-      state.treatmentsBefore.filter(treatment => treatment != {...action.payload})
-    }
-  }
+      state.treatmentsBefore.filter(
+        (treatment) => treatment != { ...action.payload }
+      );
+    },
+  },
 });
+
+export const { setToothNumber, setDescription, addTreatment, removeTreatment } =
+  definedToothSlice.actions;

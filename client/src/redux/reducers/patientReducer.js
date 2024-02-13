@@ -6,7 +6,7 @@ const initialState = {
   isAdult: true,
   hasWisdomTeeth: true,
   definedTeeth: [],
-}
+};
 
 export const patientSlice = createSlice({
   name: "patient",
@@ -22,10 +22,18 @@ export const patientSlice = createSlice({
       state.isAdult = !state.isAdult;
     },
     toggleHasWisdomTeeth: (state) => {
-      state.hasWisdomTeeth = !state.hasWisdomTeeth
+      state.hasWisdomTeeth = !state.hasWisdomTeeth;
     },
     addDefinedTeeth: (state, action) => {
       state.definedTeeth = [...state.definedTeeth, action.payload];
     },
-  }
-})
+  },
+});
+
+export const {
+  setName,
+  setBirthDate,
+  toggleIsAdult,
+  toggleHasWisdomTeeth,
+  addDefinedTeeth,
+} = patientSlice.actions;
