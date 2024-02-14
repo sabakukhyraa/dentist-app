@@ -5,29 +5,30 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export default function PatientInfo({isNew}) {
+  const location = useLocation();
 
   const patient = useSelector(state => state.patient)
   const dispatch = useDispatch()
-  const location = useLocation();
 
   const [error, setError] = useState(null);
+  console.log(patient);
 
   useEffect(() => {
-    if (location.pathname === "/new-patient") {
-      dispatch(resetPatientState())
+    if (location.pathname === "new-patient") {
+      dispatch(resetPatientState());
     }
   }, [dispatch, location.pathname]);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/patients', {
-      method: 'POST',
+    const response = await fetch("http://localhost:4000/api/patients", {
+      method: "POST",
       body: JSON.stringify(patient),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        "Content-Type": "application/json",
+      },
+    });
 
     const json = await response.json()
 
@@ -99,8 +100,8 @@ export default function PatientInfo({isNew}) {
           Last Modification Date of Patient Information: {patient.updatedAt}
         </p>
       </div>}
-      {error}
-      <button>Save</button>
+      {error && <div>{error}</div>}
+      <button type="submit">Save</button>
     </form>
   );
 }

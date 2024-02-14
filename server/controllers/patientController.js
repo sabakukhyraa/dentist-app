@@ -35,7 +35,7 @@ const createPatient = async (req, res) => {
     const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth } = req.body;
 
     // Verify data from request
-    if (!name || !birthDate || !definedTeeth || !isAdult) {
+    if (!name || !birthDate) {
       return res.status(400).json({ message: "Eksik bilgi." });
     }
 
