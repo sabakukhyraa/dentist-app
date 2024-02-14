@@ -13,6 +13,7 @@ export default function PatientList({ patientName, patientId }) {
     const json = await response.json();
 
     if (response.ok) {
+      json.birthDate = new Date(json.birthDate).toISOString().split("T")[0];
       dispatch(setState(json));
       navigate("/patient");
     }
