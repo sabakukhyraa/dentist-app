@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+label {
+  @apply mr-3;
+}
+
+input {
+  @apply outline-none border;
+}
+
 .choisable-tooth {
   @apply stroke-sky-900 transition-colors duration-200 !ease-in-out;
 }

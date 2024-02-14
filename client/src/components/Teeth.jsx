@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setDefinedTooth,
   setToothNumber,
-  resetState,
+  resetToothState,
 } from "../redux/reducers/definedToothReducer.js";
 
-export default function Teeth({isForm = false}) {
+export default function Teeth() {
 
   const dispatch = useDispatch();
   const patient = useSelector((state) => state.patient)
@@ -26,7 +26,7 @@ export default function Teeth({isForm = false}) {
     if (findDefined(toothNumber)) {
       dispatch(setDefinedTooth(findDefined(toothNumber)));
     } else {
-      dispatch(resetState());
+      dispatch(resetToothState());
       dispatch(setToothNumber(toothNumber));
     }
     setIsModalOpen(true);
@@ -95,7 +95,6 @@ export default function Teeth({isForm = false}) {
           <DefineTooth
             setIsModalOpen={setIsModalOpen}
             setToothState={setToothState}
-            isForm={isForm}
           />
         )}
       </div>

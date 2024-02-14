@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import PatientInfo from "./components/PatientInfo.jsx";
 import PatientList from "./components/PatientList.jsx";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import NewPatient from "./components/NewPatient.jsx";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -54,7 +53,7 @@ function App() {
                 <div className="flex items-center gap-6 text-2xl">
                   <label htmlFor="search-key">Search:</label>
                   <input
-                    className="px-2 py-1 my-5 border outline-none"
+                    className="px-2 py-1 my-5"
                     type="text"
                     name="search-key"
                     id="search-key"
@@ -82,7 +81,7 @@ function App() {
             }
           />
 
-          <Route path="/new-patient" element={<NewPatient />} />
+          <Route path="/new-patient" element={<PatientInfo />} />
         </Routes>
       </div>
     </Router>
