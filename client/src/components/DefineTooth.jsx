@@ -10,7 +10,6 @@ import { useEffect } from "react";
 export default function DefineTooth({
   setIsModalOpen,
   setToothState,
-  isForm = false,
 }) {
   const definedTooth = useSelector((state) => state.definedTooth);
   const dispatch = useDispatch();
@@ -25,7 +24,9 @@ export default function DefineTooth({
   }
 
   useEffect(() => {
-    dispatch(addDefinedTeeth(definedTooth));
+    if (definedTooth.description || (definedTooth.treatmentsBefore.length > 0)) {
+      dispatch(addDefinedTeeth(definedTooth));
+    }
   }, [definedTooth, dispatch]);
 
   const treatments = definedTooth.treatmentsBefore.map((treat, index) => {
@@ -36,7 +37,7 @@ export default function DefineTooth({
             Treatment {index}
           </label>
           <input
-            className="px-2 py-1 border outline-none"
+            className="px-2 py-1"
             type="text"
             name={`treatment-name-${index}`}
             id={`treatment-name-${index}`}
@@ -86,7 +87,6 @@ export default function DefineTooth({
         <ul className="flex flex-col w-full gap-2">{treatments}</ul>
         <button onClick={() => dispatch(addTreatment())} type="button">Add Treatment</button>
       </div>
-      {isForm && <button>Save the tooth data</button>}
     </div>
   );
 }
