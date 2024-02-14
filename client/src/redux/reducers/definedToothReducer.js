@@ -31,7 +31,8 @@ export const definedToothSlice = createSlice({
         (treatment) => treatment !== action.payload
       );
     },
-    resetState: (state) => {
+    resetToothState: (state) => {
+      Object.keys(state).forEach((key) => delete state[key]);
       Object.assign(state, initialState);
     },
   },
@@ -44,7 +45,7 @@ export const {
   addTreatment,
   updateTreatment,
   removeTreatment,
-  resetState,
+  resetToothState,
 } = definedToothSlice.actions;
 
 export default definedToothSlice.reducer;

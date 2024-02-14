@@ -15,7 +15,7 @@ export const patientSlice = createSlice({
   initialState,
   reducers: {
     setState: (state, action) => {
-      return action.payload
+      return action.payload;
     },
     setName: (state, action) => {
       state.name = action.payload;
@@ -40,6 +40,10 @@ export const patientSlice = createSlice({
         state.definedTeeth = [...state.definedTeeth, action.payload];
       }
     },
+    resetPatientState: (state) => {
+      Object.keys(state).forEach((key) => delete state[key]);
+      Object.assign(state, initialState);
+    },
   },
 });
 
@@ -50,6 +54,7 @@ export const {
   toggleIsAdult,
   toggleHasWisdomTeeth,
   addDefinedTeeth,
+  resetPatientState,
 } = patientSlice.actions;
 
 export default patientSlice.reducer;
