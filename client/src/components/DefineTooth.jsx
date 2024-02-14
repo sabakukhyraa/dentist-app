@@ -1,6 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setDescription } from "../redux/reducers/definedToothReducer";
+import {
+  setDescription,
+  updateTreatment,
+  removeTreatment,
+  addTreatment,
+} from "../redux/reducers/definedToothReducer";
 import { addDefinedTeeth } from "../redux/reducers/patientReducer";
+import { useEffect } from "react";
 export default function DefineTooth({
   setIsModalOpen,
   setToothState,
@@ -8,6 +14,19 @@ export default function DefineTooth({
 }) {
   const definedTooth = useSelector((state) => state.definedTooth);
   const dispatch = useDispatch();
+
+  function handleTreatment(event, index) {
+    const { value } = event.target;
+    dispatch(updateTreatment({ index, value }));
+  }
+
+  async function handleTreatmentRemoval(treat) {
+    dispatch(removeTreatment(treat));
+  }
+
+  useEffect(() => {
+    dispatch(addDefinedTeeth(definedTooth));
+  }, [definedTooth, dispatch]);
 
   const treatments = definedTooth.treatmentsBefore.map((treat, index) => {
     return (
@@ -22,9 +41,12 @@ export default function DefineTooth({
             name={`treatment-name-${index}`}
             id={`treatment-name-${index}`}
             value={treat}
+            onChange={(event) => handleTreatment(event, index, definedTooth)}
           />
         </div>
-        <button className="w-fit">Remove</button>
+        <button onClick={() => handleTreatmentRemoval(treat, definedTooth)} className="w-fit">
+          Remove
+        </button>
       </li>
     );
   });
@@ -62,7 +84,7 @@ export default function DefineTooth({
       <div className="flex flex-col gap-4 p-4 px-2 border rounded">
         <h2 className="text-3xl">Treatments applied before</h2>
         <ul className="flex flex-col w-full gap-2">{treatments}</ul>
-        <button type="button">Add Treatment</button>
+        <button onClick={() => dispatch(addTreatment())} type="button">Add Treatment</button>
       </div>
       {isForm && <button>Save the tooth data</button>}
     </div>

@@ -19,8 +19,12 @@ export const definedToothSlice = createSlice({
     setDescription: (state, action) => {
       state.description = action.payload;
     },
-    addTreatment: (state, action) => {
-      state.treatmentsBefore.push(action.payload);
+    addTreatment: (state) => {
+      state.treatmentsBefore.push("");
+    },
+    updateTreatment: (state, action) => {
+      const { index, value } = action.payload;
+      state.treatmentsBefore[index] = value;
     },
     removeTreatment: (state, action) => {
       state.treatmentsBefore = state.treatmentsBefore.filter(
@@ -38,6 +42,7 @@ export const {
   setToothNumber,
   setDescription,
   addTreatment,
+  updateTreatment,
   removeTreatment,
   resetState,
 } = definedToothSlice.actions;
