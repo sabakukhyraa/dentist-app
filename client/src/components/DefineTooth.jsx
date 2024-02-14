@@ -23,6 +23,8 @@ export default function DefineTooth({
     dispatch(removeTreatment(treat));
   }
 
+  // TODO: Treatment ve description silindiğinde diş hala defined kalıyor.
+
   useEffect(() => {
     if (definedTooth.description || (definedTooth.treatmentsBefore.length > 0)) {
       dispatch(addDefinedTeeth(definedTooth));

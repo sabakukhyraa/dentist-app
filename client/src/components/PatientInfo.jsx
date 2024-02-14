@@ -4,7 +4,7 @@ import Teeth from "./Teeth.jsx";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-export default function PatientInfo({isNew}) {
+export default function PatientInfo({isNew = false}) {
   const location = useLocation();
 
   const patient = useSelector(state => state.patient)
@@ -94,7 +94,7 @@ export default function PatientInfo({isNew}) {
       <div className="flex justify-center w-full">
         <Teeth />
       </div>
-      {isNew && <div className="self-end text-xs italic">
+      {!isNew && <div className="self-end text-xs italic">
         <p>Patient Information Recording Date: {patient.createdAt}</p>
         <p>
           Last Modification Date of Patient Information: {patient.updatedAt}
