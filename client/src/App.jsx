@@ -3,6 +3,7 @@ import PatientInfo from "./components/PatientInfo.jsx";
 import PatientList from "./components/PatientList.jsx";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Icons from "./components/Icons.jsx";
 
 function App() {
   const [patients, setPatients] = useState([]);
@@ -71,9 +72,9 @@ function App() {
                         Add New Patient
                       </Link>
                     </div>
-                    <div className="flex items-center self-start">
+                    <div className="flex items-center self-start justify-start pl-2 bg-white">
                       <input
-                        className="px-2 py-1 text-lg rounded-md"
+                        className="px-2 py-1 text-lg bg-transparent border-0"
                         type="text"
                         name="search-key"
                         id="search-key"
@@ -81,6 +82,9 @@ function App() {
                         onChange={(e) => setSearchKey(e.target.value)}
                         placeholder="Search patient"
                       />
+                      <label htmlFor="search-key">
+                        <Icons iconName={"Search"} />
+                      </label>
                     </div>
                   </div>
                 }
@@ -93,7 +97,7 @@ function App() {
             </Routes>
           </div>
         </div>
-        <footer className="w-full py-8 bg-white rounded shadow-md">
+        <footer className="w-full py-8 mt-4 bg-white rounded shadow-md">
           <div className="container">
             <div className="space-y-4 font-light">
               <p>
