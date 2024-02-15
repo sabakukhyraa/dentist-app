@@ -43,12 +43,15 @@ export default function PatientInfo({isNew = false}) {
   }
 
   return (
-    <form className="flex flex-col items-start w-full gap-6" onSubmit={handleSubmit}>
-      <div className="grid grid-cols-2 gap-4 mb-12">
+    <form
+      className="flex flex-col items-center w-full gap-6 my-4"
+      onSubmit={handleSubmit}
+    >
+      <div className="flex flex-col items-start gap-4 mb-12 form-items">
         <div>
           <label htmlFor="name">Patient Name:</label>
           <input
-            className="text-2xl outline-none"
+            className=""
             type="text"
             name="name"
             id="name"
@@ -67,7 +70,9 @@ export default function PatientInfo({isNew = false}) {
           />
         </div>
         <div>
-          <label htmlFor="isAdult">Is Patient an Adult?:</label>
+          <label className="cursor-pointer" htmlFor="isAdult">
+            Is Patient an adult?:
+          </label>
           <input
             type="checkbox"
             name="isAdult"
@@ -78,7 +83,7 @@ export default function PatientInfo({isNew = false}) {
           />
         </div>
         <div className={`${!patient.isAdult && "hidden"}`}>
-          <label htmlFor="hasWisdomTeeth">
+          <label className="cursor-pointer" htmlFor="hasWisdomTeeth">
             Does the patient have wisdom teeth?:
           </label>
           <input
@@ -92,16 +97,33 @@ export default function PatientInfo({isNew = false}) {
         </div>
       </div>
       <div className="flex justify-center w-full">
-        <Teeth />
+        <div className="flex justify-start w-2/3">
+          <Teeth />
+        </div>
       </div>
-      {!isNew && <div className="self-end text-xs italic">
-        <p>Patient Information Recording Date: {patient.createdAt}</p>
-        <p>
-          Last Modification Date of Patient Information: {patient.updatedAt}
-        </p>
-      </div>}
-      {error && <div>{error}</div>}
-      <button type="submit">Save</button>
+      <div className="flex justify-between w-full">
+        {!isNew && (
+          <div className="text-xs italic">
+            <p>
+              Patient Information Recording Date:{" "}
+              {new Date(patient.createdAt).toISOString().split("T")[0]}
+            </p>
+            <p>
+              Last Modification Date of Patient Information:
+              {new Date(patient.updatedAt).toISOString().split("T")[0]}
+            </p>
+          </div>
+        )}
+        <div>
+          {error && <div>{error}</div>}
+          <button
+            className="px-5 py-1 text-xl text-white rounded-md bg-sky-500"
+            type="submit"
+          >
+            Save
+          </button>
+        </div>
+      </div>
     </form>
   );
 }

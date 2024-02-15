@@ -81,23 +81,21 @@ export default function Teeth() {
     );
   });
   return (
-    <>
-      <div className="flex justify-between">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          version="1.1"
-          width="289.61084"
-          height="370.54398"
-        >
-          {teeth}
-        </svg>{" "}
-        {isModalOpen && (
-          <DefineTooth
-            setIsModalOpen={setIsModalOpen}
-            setToothState={setToothState}
-          />
-        )}
-      </div>
-    </>
+    <div className="flex justify-between w-full">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        width="289.61084"
+        height="370.54398"
+      >
+        {teeth}
+      </svg>
+      {isModalOpen && (
+        <DefineTooth
+          setIsModalOpen={setIsModalOpen}
+          setToothState={setToothState}
+        />
+      )}
+    </div>
   );
 }

@@ -3,11 +3,19 @@
 @tailwind utilities;
 
 label {
-  @apply mr-3;
+  @apply mr-3 font-light;
 }
 
 input {
-  @apply outline-none border;
+  @apply outline-none border pl-1 font-light;
+}
+
+input[type="checkbox"] {
+  @apply cursor-pointer;
+}
+
+.form-items > div {
+  @apply flex items-center;
 }
 
 .choisable-tooth {
