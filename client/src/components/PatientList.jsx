@@ -24,11 +24,11 @@ export default function PatientList({ patient }) {
 
   return (
     <li
-      className="w-full p-4 transition-all duration-300 ease-in-out border-t-2 cursor-pointer border-x-2 hover:bg-sky-500 hover:text-white"
+      className="w-full p-4 transition-all duration-300 ease-in-out bg-white border rounded-md cursor-pointer hover:bg-sky-500 hover:text-white"
       onClick={fetchPatient}
     >
-      <h2>{patient.name}</h2>
-      <p>Age: {currentYear - new Date(patient.birthDate).toISOString().split("-")[0]}</p>
+      <h2 className="text-lg font-bold text-sky-500">{patient.name}</h2>
+      <p className="text-sm">Age: {currentYear - new Date(patient.birthDate).toISOString().split("-")[0]}</p>
     </li>
   );
 }
