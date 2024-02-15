@@ -27,9 +27,7 @@ export const definedToothSlice = createSlice({
       state.treatmentsBefore[index] = value;
     },
     removeTreatment: (state, action) => {
-      state.treatmentsBefore = state.treatmentsBefore.filter(
-        (treatment) => treatment !== action.payload
-      );
+      state.treatmentsBefore.splice(action.payload, 1);
     },
     resetToothState: (state) => {
       Object.keys(state).forEach((key) => delete state[key]);
