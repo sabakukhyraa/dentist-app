@@ -11,7 +11,6 @@ export default function PatientInfo({isNew = false}) {
   const dispatch = useDispatch()
 
   const [error, setError] = useState(null);
-  console.log(patient);
 
   useEffect(() => {
     if (location.pathname === "new-patient") {
@@ -21,24 +20,27 @@ export default function PatientInfo({isNew = false}) {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const response = await fetch("http://localhost:4000/api/patients", {
-      method: "POST",
-      body: JSON.stringify(patient),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const json = await response.json()
-
-    if (!response.ok) {
-      setError(json.message);
-    }
-    if (response.ok) {
-      dispatch(resetPatientState())
-      setError(null)
-      console.log('New patient added.', json)
+    if (isNew) {
+      const response = await fetch("http://localhost:4000/api/patients", {
+        method: "POST",
+        body: JSON.stringify(patient),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const json = await response.json()
+  
+      if (!response.ok) {
+        setError(json.message);
+      }
+      if (response.ok) {
+        dispatch(resetPatientState())
+        setError(null)
+        console.log('New patient added.', json)
+      }
+    } else {
+      // PATCH update to existing patient record
     }
   }
 
@@ -103,13 +105,13 @@ export default function PatientInfo({isNew = false}) {
       </div>
       <div className="flex justify-between w-full">
         {!isNew && (
-          <div className="text-xs italic">
+          <div className="text-sm italic font-light">
             <p>
-              Patient Information Recording Date:{" "}
+              Created At:{" "}
               {new Date(patient.createdAt).toISOString().split("T")[0]}
             </p>
             <p>
-              Last Modification Date of Patient Information:
+              Updated At:{" "}
               {new Date(patient.updatedAt).toISOString().split("T")[0]}
             </p>
           </div>
