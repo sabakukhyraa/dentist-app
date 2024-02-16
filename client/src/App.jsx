@@ -25,19 +25,21 @@ function App() {
     };
 
     fetchPatients();
-  }, []);
+  }, [extractedPatient]);
 
   const filteredPatients = patients.filter((p) =>
     p.name.toLowerCase().includes(searchKey.toLowerCase())
   );
 
   return (
-    <PatientContext.Provider value={{extractedPatient, setExtractedPatient}}>
+    <PatientContext.Provider value={{ extractedPatient, setExtractedPatient }}>
       <Router>
         <div className="flex flex-col items-center w-full bg-gray-100">
           <div className="w-full py-8 bg-white rounded shadow-md">
             <div className="container">
-              <h1 className="text-3xl font-bold text-sky-500">Dentist App</h1>
+              <h1 className="text-3xl font-bold text-sky-500">
+                <Link to={"/"}>Dentist App</Link>
+              </h1>
             </div>
           </div>
           <div className="container">
