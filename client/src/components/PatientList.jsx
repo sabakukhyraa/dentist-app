@@ -1,22 +1,22 @@
 import { useNavigate } from "react-router-dom"
-import { setState } from "../redux/reducers/patientReducer";
+import { setBirthDate, setState } from "../redux/reducers/patientReducer";
 import { useDispatch } from "react-redux";
+import { useContext } from "react";
+import { PatientContext } from "../App";
 export default function PatientList({ patient }) {
+
+  const { setExtractedPatient } = useContext(PatientContext);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const fetchPatient = async () => {
-    const response = await fetch(
-      `http://localhost:4000/api/patients/${patient._id}`
+  const fetchPatient = () => {
+    dispatch(
+      setBirthDate(new Date(patient.birthDate).toISOString().split("T")[0])
     );
-    const json = await response.json();
-
-    if (response.ok) {
-      json.birthDate = new Date(json.birthDate).toISOString().split("T")[0];
-      dispatch(setState(json));
-      navigate("/patient");
-    }
+    dispatch(setState(patient));
+    setExtractedPatient(patient);
+    navigate("/patient");
   };
 
   const currentDate = new Date();
