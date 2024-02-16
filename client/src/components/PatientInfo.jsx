@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { resetPatientState, setBirthDate, setName, toggleHasWisdomTeeth, toggleIsAdult } from "../redux/reducers/patientReducer.js";
 import Teeth from "./Teeth.jsx";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { PatientContext } from "../App";
 
-export default function PatientInfo({isNew = false}) {
+export default function PatientInfo({ isNew = false }) {
+  const { extractedPatient, setExtractedPatient } = useContext(PatientContext);
+
   const location = useLocation();
+  const navigate = useNavigate();
 
   const patient = useSelector(state => state.patient)
   const dispatch = useDispatch()
@@ -40,7 +44,38 @@ export default function PatientInfo({isNew = false}) {
         console.log('New patient added.', json)
       }
     } else {
+      const updatedPatient = {};
+
+      Object.keys(patient).forEach((property) => {
+        if (Object.prototype.hasOwnProperty.call(extractedPatient, property) && (patient[property] !== extractedPatient[property])) { 
+          updatedPatient[property] = patient[property]
+        }
+      })
+
       // PATCH update to existing patient record
+      const response = await fetch(
+        `http://localhost:4000/api/patients/${patient._id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(updatedPatient),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const json = await response.json();
+      
+      if (!response.ok) {
+        setError(json.message);
+        setExtractedPatient(null)
+      }
+      if (response.ok) {
+        setError(null);
+        console.log("Patient updated.", json);
+        setExtractedPatient(null)
+        dispatch(resetPatientState());
+        navigate("/");
+      }
     }
   }
 
