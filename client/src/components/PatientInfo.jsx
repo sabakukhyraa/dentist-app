@@ -13,7 +13,7 @@ export default function PatientInfo({isNew = false}) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (location.pathname === "new-patient") {
+    if (location.pathname === "/new-patient") {
       dispatch(resetPatientState());
     }
   }, [dispatch, location.pathname]);
