@@ -5,7 +5,7 @@ import {
   removeTreatment,
   addTreatment,
 } from "../redux/reducers/definedToothReducer";
-import { addDefinedTeeth } from "../redux/reducers/patientReducer";
+import { addDefinedTeeth, removeDefinedTeeth } from "../redux/reducers/patientReducer";
 import { useEffect } from "react";
 export default function DefineTooth({
   setIsModalOpen,
@@ -23,11 +23,11 @@ export default function DefineTooth({
     dispatch(removeTreatment(treatIndex));
   }
 
-  // TODO: Treatment ve description silindiğinde diş hala defined kalıyor.
-
   useEffect(() => {
     if (definedTooth.description || (definedTooth.treatmentsBefore.length > 0)) {
       dispatch(addDefinedTeeth(definedTooth));
+    } else {
+      dispatch(removeDefinedTeeth(definedTooth));
     }
   }, [definedTooth, dispatch]);
 

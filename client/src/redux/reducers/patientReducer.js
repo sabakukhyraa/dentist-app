@@ -40,6 +40,10 @@ export const patientSlice = createSlice({
         state.definedTeeth = [...state.definedTeeth, action.payload];
       }
     },
+    removeDefinedTeeth: (state, action) => {
+      let toRemove = action.payload;
+      state.definedTeeth = state.definedTeeth.filter((x) => x.toothNumber !== toRemove.toothNumber);
+    },
     resetPatientState: (state) => {
       Object.keys(state).forEach((key) => delete state[key]);
       Object.assign(state, initialState);
@@ -54,6 +58,7 @@ export const {
   toggleIsAdult,
   toggleHasWisdomTeeth,
   addDefinedTeeth,
+  removeDefinedTeeth,
   resetPatientState,
 } = patientSlice.actions;
 
