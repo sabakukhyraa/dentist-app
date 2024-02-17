@@ -42,6 +42,9 @@ export default function PatientInfo({ isNew = false }) {
         dispatch(resetPatientState())
         setError(null)
         console.log('New patient added.', json)
+        setExtractedPatient((old) => !old);
+        dispatch(resetPatientState());
+        navigate("/");
       }
     } else {
       const updatedPatient = {};
@@ -117,7 +120,7 @@ export default function PatientInfo({ isNew = false }) {
             type="date"
             name="birthDate"
             id="birthDate"
-            value={new Date(patient.birthDate).toISOString().split("T")[0]}
+            value={patient.birthDate && new Date(patient.birthDate).toISOString().split("T")[0]}
             onChange={(e) => dispatch(setBirthDate(e.target.value))}
           />
         </div>
@@ -153,7 +156,7 @@ export default function PatientInfo({ isNew = false }) {
           <Teeth />
         </div>
       </div>
-      <div className="flex justify-between w-full">
+      <div className={`flex justify-between w-full ${isNew && "!justify-end"}`}>
         {!isNew && (
           <div className="text-sm italic font-light">
             <p>
@@ -166,7 +169,7 @@ export default function PatientInfo({ isNew = false }) {
             </p>
           </div>
         )}
-        <div>
+        <div className="self-end">
           {error && <div>{error}</div>}
           <button
             className="px-5 py-1 text-xl text-white bg-red-500 rounded-md"
