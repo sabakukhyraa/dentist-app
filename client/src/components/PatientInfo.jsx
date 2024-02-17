@@ -79,6 +79,21 @@ export default function PatientInfo({ isNew = false }) {
     }
   }
 
+
+  const deletePatient = async () => {
+    const response = await fetch(`http://localhost:4000/api/patients/${patient._id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      console.log("Patient deleted.")
+      setExtractedPatient(null);
+      dispatch(resetPatientState());
+      navigate("/")
+    }
+  };
+  
+
   return (
     <form
       className="flex flex-col items-center w-full gap-6 my-4"
@@ -154,7 +169,14 @@ export default function PatientInfo({ isNew = false }) {
         <div>
           {error && <div>{error}</div>}
           <button
-            className="px-5 py-1 text-xl text-white rounded-md bg-sky-500"
+            className="px-5 py-1 text-xl text-white bg-red-500 rounded-md"
+            type="button"
+            onClick={deletePatient}
+          >
+            Delete
+          </button>
+          <button
+            className="px-5 py-1 ml-2 text-xl text-white rounded-md bg-sky-500"
             type="submit"
           >
             Save
