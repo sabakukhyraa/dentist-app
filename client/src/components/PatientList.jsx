@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { resetPatientState, setBirthDate, setState } from "../redux/reducers/patientReducer";
+import { resetPatientState, setState } from "../redux/reducers/patientReducer";
 import { useDispatch } from "react-redux";
 import { useContext } from "react";
 import { PatientContext } from "../App";
@@ -12,9 +12,6 @@ export default function PatientList({ patient }) {
   const dispatch = useDispatch();
 
   const fetchPatient = () => {
-    dispatch(
-      setBirthDate(new Date(patient.birthDate).toISOString().split("T")[0])
-    );
     dispatch(setState(patient));
     setExtractedPatient(patient);
     navigate("/patient");

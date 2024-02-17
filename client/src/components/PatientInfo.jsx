@@ -117,7 +117,7 @@ export default function PatientInfo({ isNew = false }) {
             type="date"
             name="birthDate"
             id="birthDate"
-            value={patient.birthDate}
+            value={new Date(patient.birthDate).toISOString().split("T")[0]}
             onChange={(e) => dispatch(setBirthDate(e.target.value))}
           />
         </div>
