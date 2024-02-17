@@ -33,7 +33,7 @@ export default function DefineTooth({
 
   const treatments = definedTooth.treatmentsBefore.map((treat, index) => {
     return (
-      <li className="flex justify-between p-1" key={index}>
+      <li className="flex items-center justify-between p-1" key={index}>
         <div>
           <label className="mr-4" htmlFor={`treatment-name-${index}`}>
             Treatment {index}

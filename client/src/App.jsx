@@ -63,8 +63,8 @@ function App() {
                 <Route
                   path="/"
                   element={
-                    <div className="flex justify-between gap-4 my-4">
-                      <div className="flex flex-col w-full gap-4">
+                    <div className="flex flex-col justify-between gap-4 my-4 md:flex-row">
+                      <div className="flex flex-col order-2 w-full gap-4 md:-order-1">
                         <ul className="w-full space-y-2">
                           {patients &&
                             filteredPatients.map((p) => (

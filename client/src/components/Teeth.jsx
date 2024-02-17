@@ -81,7 +81,7 @@ export default function Teeth() {
     );
   });
   return (
-    <div className="flex justify-between w-full">
+    <div className="flex flex-col justify-between w-full md:flex-row">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
