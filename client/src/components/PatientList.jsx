@@ -17,7 +17,10 @@ export default function PatientList({ patient }) {
     navigate("/patient");
   };
 
-  const deletePatient = async () => {
+const deletePatient = async () => {
+  const isConfirmed = window.confirm("Are you sure? This cannot be undone!");
+
+  if (isConfirmed) {
     const response = await fetch(
       `http://localhost:4000/api/patients/${patient._id}`,
       {
@@ -31,7 +34,8 @@ export default function PatientList({ patient }) {
       dispatch(resetPatientState());
       navigate("/");
     }
-  };
+  }
+};
 
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();

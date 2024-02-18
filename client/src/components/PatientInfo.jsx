@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { resetPatientState, setBirthDate, setName, toggleHasWisdomTeeth, toggleIsAdult } from "../redux/reducers/patientReducer.js";
+import {
+  resetPatientState,
+  setBirthDate,
+  setName,
+  toggleHasWisdomTeeth,
+  toggleIsAdult,
+} from "../redux/reducers/patientReducer.js";
 import Teeth from "./Teeth.jsx";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,8 +17,8 @@ export default function PatientInfo({ isNew = false }) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const patient = useSelector(state => state.patient)
-  const dispatch = useDispatch()
+  const patient = useSelector((state) => state.patient);
+  const dispatch = useDispatch();
 
   const [error, setError] = useState(null);
 
@@ -21,7 +27,7 @@ export default function PatientInfo({ isNew = false }) {
       dispatch(resetPatientState());
     }
   }, [dispatch, location.pathname]);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isNew) {
@@ -32,16 +38,16 @@ export default function PatientInfo({ isNew = false }) {
           "Content-Type": "application/json",
         },
       });
-  
-      const json = await response.json()
-  
+
+      const json = await response.json();
+
       if (!response.ok) {
         setError(json.message);
       }
       if (response.ok) {
-        dispatch(resetPatientState())
-        setError(null)
-        console.log('New patient added.', json)
+        dispatch(resetPatientState());
+        setError(null);
+        console.log("New patient added.", json);
         setExtractedPatient((old) => !old);
         dispatch(resetPatientState());
         navigate("/");
@@ -50,10 +56,13 @@ export default function PatientInfo({ isNew = false }) {
       const updatedPatient = {};
 
       Object.keys(patient).forEach((property) => {
-        if (Object.prototype.hasOwnProperty.call(extractedPatient, property) && (patient[property] !== extractedPatient[property])) { 
-          updatedPatient[property] = patient[property]
+        if (
+          Object.prototype.hasOwnProperty.call(extractedPatient, property) &&
+          patient[property] !== extractedPatient[property]
+        ) {
+          updatedPatient[property] = patient[property];
         }
-      })
+      });
 
       // PATCH update to existing patient record
       const response = await fetch(
@@ -67,35 +76,43 @@ export default function PatientInfo({ isNew = false }) {
         }
       );
       const json = await response.json();
-      
+
       if (!response.ok) {
         setError(json.message);
-        setExtractedPatient(null)
+        setExtractedPatient(null);
       }
       if (response.ok) {
         setError(null);
         console.log("Patient updated.", json);
-        setExtractedPatient(null)
+        setExtractedPatient(null);
         dispatch(resetPatientState());
         navigate("/");
       }
     }
-  }
+  };
 
-
+  
   const deletePatient = async () => {
-    const response = await fetch(`http://localhost:4000/api/patients/${patient._id}`, {
-      method: 'DELETE',
-    });
 
-    if (response.ok) {
-      console.log("Patient deleted.")
-      setExtractedPatient(null);
-      dispatch(resetPatientState());
-      navigate("/")
+    const isConfirmed = window.confirm("Are you sure? This cannot be undone!");
+
+    if (isConfirmed) {
+      const response = await fetch(
+        `http://localhost:4000/api/patients/${patient._id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        console.log("Patient deleted.");
+        setExtractedPatient(null);
+        dispatch(resetPatientState());
+        navigate("/");
+      }
     }
   };
-  
+
 
   return (
     <form
@@ -120,7 +137,10 @@ export default function PatientInfo({ isNew = false }) {
             type="date"
             name="birthDate"
             id="birthDate"
-            value={patient.birthDate && new Date(patient.birthDate).toISOString().split("T")[0]}
+            value={
+              patient.birthDate &&
+              new Date(patient.birthDate).toISOString().split("T")[0]
+            }
             onChange={(e) => dispatch(setBirthDate(e.target.value))}
           />
         </div>
@@ -171,13 +191,15 @@ export default function PatientInfo({ isNew = false }) {
         )}
         <div className="self-end">
           {error && <div>{error}</div>}
-          <button
-            className="px-5 py-1 text-xl text-white bg-red-500 rounded-md"
-            type="button"
-            onClick={deletePatient}
-          >
-            Delete
-          </button>
+          {!isNew && (
+            <button
+              className="px-5 py-1 text-xl text-white bg-red-500 rounded-md"
+              type="button"
+              onClick={deletePatient}
+            >
+              Delete
+            </button>
+          )}
           <button
             className="px-5 py-1 ml-2 text-xl text-white rounded-md bg-sky-500"
             type="submit"
