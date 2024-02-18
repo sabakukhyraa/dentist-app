@@ -37,6 +37,10 @@ const patientSchema = new Schema(
       type: Boolean,
       required: false,
     },
+    doctor: {
+      type: Schema.Types.ObjectId,
+      ref: "Doctor",
+    },
     definedTeeth: [toothSchema],
   },
   { timestamps: true }
