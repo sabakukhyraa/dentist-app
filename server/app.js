@@ -2,8 +2,8 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
-const Patient = require("./models/patientModel.js");
 const patientRoutes = require("./routes/patients.js");
+const userRoutes = require("./routes/users.js");
 
 // express app
 const app = express();
@@ -21,6 +21,7 @@ app.use((req, res, next) => {
 
 //routes
 app.use("/api/patients", patientRoutes);
+app.use("/api/user", userRoutes);
 
 // connect to db
 mongoose

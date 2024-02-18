@@ -1,5 +1,4 @@
 const express = require("express");
-const Patient = require("../models/patientModel.js");
 const router = express.Router();
 const {
   getAllPatients,
