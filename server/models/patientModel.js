@@ -40,6 +40,7 @@ const patientSchema = new Schema(
     doctor: {
       type: Schema.Types.ObjectId,
       ref: "Doctor",
+      required: true,
     },
     definedTeeth: [toothSchema],
   },
