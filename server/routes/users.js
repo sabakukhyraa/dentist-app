@@ -1,7 +1,7 @@
 const express = require("express");
 
 // controller funcs
-import { loginUser, signupUser } from "../controllers/userController";
+const { loginUser, signupUser } = require("../controllers/userController.js")
 
 const router = express.Router();
 
