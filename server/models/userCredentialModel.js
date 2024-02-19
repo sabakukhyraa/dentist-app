@@ -21,7 +21,7 @@ const userCredentialSchema = new Schema({
 });
 
 // Static signup method
-userCredentialSchema.statics.signup = async (email, password, userType) => {
+userCredentialSchema.statics.signup = async function(email, password, userType) {
   const userExists = await this.findOne({ email });
   if (userExists) {
     throw new Error("Email already in use");
