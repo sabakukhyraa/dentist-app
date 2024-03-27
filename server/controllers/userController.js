@@ -1,8 +1,8 @@
-const User = require('../models/userCredentialModel.js')
+const User = require('../models/userModel.js')
 
 // login user
 const loginUser = async (req, res) => {
-  res.json({ mssg: "login user" });
+  const { email, password } = req.body;
 };
 
 // signup user
