@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   getAllPatients,
   getPatient,
+  getPatientsByDoctor,
   createPatient,
   deletePatient,
   updatePatient,
@@ -13,6 +14,9 @@ router.get("/", getAllPatients);
 
 // GET a single patient
 router.get("/:id", getPatient);
+
+// GET patients of a doctor
+router.get("/:doctorId", getPatientsByDoctor);
 
 // POST a new patient
 router.post("/", createPatient);

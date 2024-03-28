@@ -4,8 +4,9 @@ const mongoose = require("mongoose");
 // GET all patients
 const getAllPatients = async (req, res) => {
   try {
-    const patients = await Patient.find({}).sort({ createdAt: -1 });
-
+    const patients = await Patient.find({}).sort({
+      createdAt: -1
+    });
     res.status(200).json(patients);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -29,10 +30,24 @@ const getPatient = async (req, res) => {
   }
 };
 
+// GET patients of a doctor
+const getPatientsByDoctor = async (req, res) => {
+  const { doctorId } = req.params;
+  try {
+    const patients = await Patient.find({ doctor: doctorId }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json(patients);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 // CREATE a new patient
 const createPatient = async (req, res) => {
   try {
-    const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth, doctor } = req.body;
+    const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth, doctor } =
+      req.body;
 
     // Verify data from request
     if (!name || !birthDate) {
@@ -50,11 +65,7 @@ const createPatient = async (req, res) => {
 
     // fill the empty array with data from front request
     definedTeeth.forEach((toothData) => {
-      const {
-        toothNumber,
-        treatmentsBefore,
-        description,
-      } = toothData;
+      const { toothNumber, treatmentsBefore, description } = toothData;
 
       if (toothNumber && description) {
         newPatient.definedTeeth.push({
@@ -115,6 +126,7 @@ const updatePatient = async (req, res) => {
 module.exports = {
   getAllPatients,
   getPatient,
+  getPatientsByDoctor,
   createPatient,
   deletePatient,
   updatePatient,
