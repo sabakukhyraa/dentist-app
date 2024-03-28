@@ -32,7 +32,7 @@ const getPatient = async (req, res) => {
 // CREATE a new patient
 const createPatient = async (req, res) => {
   try {
-    const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth } = req.body;
+    const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth, doctor } = req.body;
 
     // Verify data from request
     if (!name || !birthDate) {
@@ -40,11 +40,12 @@ const createPatient = async (req, res) => {
     }
 
     const newPatient = await Patient.create({
-      name, // this is same as "name: name",
-      birthDate, // this is same as "birthDate: birthDate",
+      name,
+      birthDate,
       definedTeeth: [], // empty array
       isAdult,
       hasWisdomTeeth: !!hasWisdomTeeth,
+      doctor,
     });
 
     // fill the empty array with data from front request
