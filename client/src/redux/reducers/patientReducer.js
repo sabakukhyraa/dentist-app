@@ -8,6 +8,7 @@ const initialState = {
   definedTeeth: [],
   updatedAt: null,
   createdAt: null,
+  doctor: null,
 };
 
 export const patientSlice = createSlice({
