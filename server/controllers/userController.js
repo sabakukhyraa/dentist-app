@@ -1,19 +1,17 @@
 const User = require('../models/userModel.js');
-const { createDoctor } = require('./doctorController.js');
 
 // login user
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 };
 
-// sign up user
+// sign up doctor user
 const signUpDoctorUser = async (req, res) => {
 
   const { email, password, name } = req.body;
-  const newDoctor = await createDoctor(name)
 
   try {
-    const user = await User.signUp(email, password, "Doctor", newDoctor);
+    const user = await User.signUp(email, password, "Doctor", name);
 
     res.status(200).json({ email, user });
   } catch (error) {
@@ -21,7 +19,7 @@ const signUpDoctorUser = async (req, res) => {
   }
 };
 
-// sign up user
+// sign up patient user
 const signUpPatientUser = async (req, res) => {
 
   const { email, password, patient } = req.body;
