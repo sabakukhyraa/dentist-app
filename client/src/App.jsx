@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Icons from "./components/Icons.jsx";
 import Home from "./pages/Home.jsx";
+import Header from "./components/TheHeader.jsx";
 
 export const PatientContext = createContext();
 
@@ -36,13 +37,7 @@ function App() {
     <PatientContext.Provider value={{ extractedPatient, setExtractedPatient }}>
       <Router>
         <div className="flex flex-col items-center w-full bg-gray-100">
-          <div className="w-full py-8 bg-white rounded shadow-md">
-            <div className="container">
-              <h1 className="text-3xl font-bold text-sky-500">
-                <Link to={"/"}>Dentist App</Link>
-              </h1>
-            </div>
-          </div>
+          <Header />
           <div className="container">
             <div className="w-full min-h-screen">
               <Routes>
