@@ -4,6 +4,7 @@ import PatientList from "./components/PatientList.jsx";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Icons from "./components/Icons.jsx";
+import Home from "./pages/Home.jsx";
 
 export const PatientContext = createContext();
 
@@ -45,6 +46,8 @@ function App() {
           <div className="container">
             <div className="w-full min-h-screen">
               <Routes>
+                <Route path="/" element={<Home />} />
+
                 <Route
                   path="/patient"
                   element={
@@ -61,7 +64,7 @@ function App() {
                 />
 
                 <Route
-                  path="/"
+                  path="/my-patients"
                   element={
                     <div className="flex flex-col justify-between gap-4 my-4 md:flex-row">
                       <div className="flex flex-col order-2 w-full gap-4 md:-order-1">
@@ -73,7 +76,7 @@ function App() {
                         </ul>
                         <Link
                           to="/new-patient"
-                          className="w-full p-2 text-center text-white rounded-md bg-sky-500"
+                          className="w-full link-button"
                         >
                           Add New Patient
                         </Link>
