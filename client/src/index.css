@@ -31,5 +31,5 @@ svg {
 }
 
 .link-button {
-  @apply p-2 !pb-[9px] text-center text-white rounded-md bg-sky-500
+  @apply py-2 px-3 text-center text-white rounded-md bg-sky-500
 }
