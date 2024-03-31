@@ -3,6 +3,8 @@ import PatientInfo from "./components/PatientInfo.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Home from "./pages/Home.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
 import Header from "./components/TheHeader.jsx";
 import Patients from "./pages/Patients.jsx";
 
@@ -22,12 +24,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
 
+                <Route path="/my-patients" element={<Patients />} />
 
-                <Route
-                  path="/my-patients"
-                  element={<Patients />}
-                />
-                
                 <Route
                   path="/patient"
                   element={
@@ -47,6 +45,10 @@ function App() {
                   path="/new-patient"
                   element={<PatientInfo isNew={true} />}
                 />
+
+                <Route path="/login" element={<Login />} />
+
+                <Route path="/sign-up" element={<Register />} />
               </Routes>
             </div>
           </div>
