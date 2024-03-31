@@ -31,7 +31,7 @@ const userCredentialSchema = new Schema({
   },
 });
 
-// Static signUp method
+// Static sign up method
 userCredentialSchema.statics.signUp = async function (
   email,
   password,
@@ -40,7 +40,7 @@ userCredentialSchema.statics.signUp = async function (
 ) {
   // Validation
   if (!email || !password) {
-    throw Error("Email and Password are required");
+    throw Error("All fields must be filled.");
   }
   if (!validator.isEmail(email)) {
     throw Error("Email is not valid.");
@@ -50,7 +50,7 @@ userCredentialSchema.statics.signUp = async function (
   }
   const userExists = await this.findOne({ email });
   if (userExists) {
-    throw new Error("Email already in use!");
+    throw new Error("Email already in use.");
   }
 
   // Password encryption
@@ -78,8 +78,30 @@ userCredentialSchema.statics.signUp = async function (
 
     return user;
   } else {
-    throw new Error("Invalid role!");
+    throw new Error("Invalid role.");
   }
 };
+
+// Static sign in method
+userCredentialSchema.statics.login = async function (email, password) {
+  
+  if (!email || !password) {
+    throw Error("All fields must be filled.");
+  }
+
+  const user = await this.findOne({ email });
+  if (!user) {
+    throw Error("Incorrect email.")
+  }
+
+  const match = await bcrypt.compare(password, user.password)
+
+  if (!match) {
+    throw Error("Incorrect password.")
+  } else {
+    return user;
+  }
+
+}
 
 module.exports = mongoose.model("User", userCredentialSchema);
