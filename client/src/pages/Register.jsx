@@ -13,7 +13,7 @@ export default function Register() {
 
     password !== passwordAgain
       ? setError("Passwords do not match.")
-      : await signUp(email, password, passwordAgain, fullName);
+      : await signUp(email, password, fullName);
 
   };
 

@@ -1,14 +1,13 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux";
-import { login } from "../redux/reducers/authReducer";
+import { login } from "../redux/reducers/authReducer.js";
 
 export const useSignup = () => {
   const dispatch = useDispatch();
-
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  const signUp = async (email, password, passwordAgain, fullName) => {
+  const signUp = async (email, password, fullName) => {
     setIsLoading(true)
     setError(null)
 
