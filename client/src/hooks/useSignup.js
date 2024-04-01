@@ -2,21 +2,24 @@ import { useState } from "react"
 import { useDispatch } from "react-redux";
 import { login } from "../redux/reducers/authReducer";
 
-export default function useSignup() {
+export const useSignup = () => {
   const dispatch = useDispatch();
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  const signUp = async (email, password) => {
+  const signUp = async (email, password, fullName) => {
     setIsLoading(true)
     setError(null)
 
-    const response = await fetch('http://localhost:4000/api/user/sign-up', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body :JSON.stringify({email, password})
-    })
+    const response = await fetch(
+      "http://localhost:4000/api/user/signup-doctor",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, name: fullName }),
+      }
+    );
 
     const json = await response.json()
 
@@ -37,3 +40,4 @@ export default function useSignup() {
 
   return { signUp, isLoading, error }
 }
+

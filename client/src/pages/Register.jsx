@@ -1,17 +1,20 @@
 import { useState } from "react";
+import { useSignup } from "../hooks/useSignup";
 
 export default function Register() {
   const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
+  const { signUp, isLoading, error } = useSignup();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (password !== passwordAgain) return alert('Passwords do not match')
-        
-    console.log(email, password)
-  }
+    if (password !== passwordAgain) return alert("Passwords do not match");
+
+    await signUp(email, password, fullName);
+  };
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -27,6 +30,16 @@ export default function Register() {
             placeholder="E-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Full Name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
           />
         </div>
         <div>
@@ -50,9 +63,18 @@ export default function Register() {
           />
         </div>
 
-        <button className="self-end !px-6 link-button" type="submit">
+        <button
+          disabled={isLoading}
+          className="self-end !px-6 link-button"
+          type="submit"
+        >
           Register
         </button>
+        {error && (
+          <div>
+            <p className="text-red-700">{error}</p>
+          </div>
+        )}
       </form>
     </div>
   );
