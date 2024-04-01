@@ -8,7 +8,7 @@ export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  const signUp = async (email, password, fullName) => {
+  const signUp = async (email, password, passwordAgain, fullName) => {
     setIsLoading(true)
     setError(null)
 
@@ -38,6 +38,6 @@ export const useSignup = () => {
     }
   }
 
-  return { signUp, isLoading, error }
+  return { signUp, isLoading, error, setError };
 }
 
