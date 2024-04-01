@@ -33,3 +33,15 @@ svg {
 .link-button {
   @apply py-2 px-3 text-center text-white rounded-md bg-sky-500
 }
+
+.auth-forms {
+  @apply flex flex-col items-center max-w-xs w-full p-4 bg-white mt-12 rounded-md
+}
+
+.auth-forms > div {
+  @apply w-full mb-3
+}
+
+.auth-forms > div > input {
+  @apply px-3 py-2 w-full rounded-md
+}
