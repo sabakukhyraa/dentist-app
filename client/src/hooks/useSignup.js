@@ -7,7 +7,7 @@ export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  const signUp = async (email, password, fullName) => {
+  const signUpDoctor = async (email, password, fullName) => {
     setIsLoading(true)
     setError(null)
 
@@ -37,6 +37,30 @@ export const useSignup = () => {
     }
   }
 
-  return { signUp, isLoading, error, setError };
+  const signUpPatient = async (email, password, patient) => {
+    setIsLoading(true)
+    setError(null)
+
+    const response = await fetch(
+      "http://localhost:4000/api/user/signup-patient",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, patient }),
+      }
+    );
+
+    const json = await response.json()
+
+    if (!response.ok) {
+      setIsLoading(false)
+      setError(json.error)
+    }
+    if (response.ok) {
+      setIsLoading(false)
+    }
+  }
+
+  return { signUpDoctor, signUpPatient, isLoading, error, setError };
 }
 
