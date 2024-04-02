@@ -6,14 +6,14 @@ export default function Register() {
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
-  const { signUp, isLoading, error, setError } = useSignup();
+  const { signUpDoctor, isLoading, error, setError } = useSignup();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     password !== passwordAgain
       ? setError("Passwords do not match.")
-      : await signUp(email, password, fullName);
+      : await signUpDoctor(email, password, fullName);
 
   };
 
