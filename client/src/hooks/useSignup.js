@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux";
-import { login } from "../redux/reducers/authReducer.js";
+import { loginReducer } from "../redux/reducers/authReducer.js";
 
 export const useSignup = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export const useSignup = () => {
       localStorage.setItem('user', JSON.stringify(json))
 
       // update the user reducer
-      dispatch(login(json))
+      dispatch(loginReducer(json));
 
       setIsLoading(false)
     }
@@ -63,4 +63,3 @@ export const useSignup = () => {
 
   return { signUpDoctor, signUpPatient, isLoading, error, setError };
 }
-

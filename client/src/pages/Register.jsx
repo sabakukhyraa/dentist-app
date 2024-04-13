@@ -65,10 +65,10 @@ export default function Register() {
 
         <button
           disabled={isLoading}
-          className="self-end !px-6 link-button"
+          className="self-end !px-6 link-button disabled:opacity-30"
           type="submit"
         >
-          Register
+          {isLoading ? "Loading" : "Register"}
         </button>
         {error && (
           <div>
