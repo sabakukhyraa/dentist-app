@@ -14,12 +14,11 @@ export default function Register() {
     password !== passwordAgain
       ? setError("Passwords do not match.")
       : await signUpDoctor(email, password, fullName);
-
   };
 
   return (
     <div className="flex flex-col items-center w-full">
-      <form className="auth-forms" onSubmit={handleSubmit}>
+      <form className="auth-forms" onSubmit={handleSubmit} noValidate>
         <h2 className="mx-auto mb-6 text-4xl font-bold w-fit text-sky-500">
           Register
         </h2>
