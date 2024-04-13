@@ -29,7 +29,6 @@ const deletePatient = async () => {
     );
 
     if (response.ok) {
-      console.log("Patient deleted.");
       setExtractedPatient(null);
       dispatch(resetPatientState());
       navigate("/");

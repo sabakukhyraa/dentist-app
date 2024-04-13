@@ -47,7 +47,6 @@ export default function PatientInfo({ isNew = false }) {
       if (response.ok) {
         dispatch(resetPatientState());
         setError(null);
-        console.log("New patient added.", json);
         setExtractedPatient((old) => !old);
         dispatch(resetPatientState());
         navigate("/");
@@ -83,7 +82,6 @@ export default function PatientInfo({ isNew = false }) {
       }
       if (response.ok) {
         setError(null);
-        console.log("Patient updated.", json);
         setExtractedPatient(null);
         dispatch(resetPatientState());
         navigate("/");
@@ -105,7 +103,6 @@ export default function PatientInfo({ isNew = false }) {
       );
 
       if (response.ok) {
-        console.log("Patient deleted.");
         setExtractedPatient(null);
         dispatch(resetPatientState());
         navigate("/");
