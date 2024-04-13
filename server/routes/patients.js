@@ -15,7 +15,7 @@ const router = express.Router();
 router.use(requireAuth); // only authenticated users can access these routes
 
 // GET all patients
-router.get("/", requireRole("Doctor"), getAllPatients);
+router.get("/", requireRole("Admin"), getAllPatients);
 
 // GET a single patient
 router.get("/:id", getPatient);
