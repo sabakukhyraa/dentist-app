@@ -14,6 +14,10 @@ input[type="checkbox"] {
   @apply cursor-pointer rounded-md;
 }
 
+.animation {
+  @apply transition-all duration-300;
+}
+
 .form-items > div {
   @apply flex items-center text-sky-900;
 }
@@ -32,6 +36,10 @@ svg {
 
 .link-button {
   @apply py-2 px-3 text-center text-white rounded-md bg-sky-500
+}
+
+.logout-button {
+  @apply py-2 px-3 text-center text-sky-500 rounded-md bg-transparent border border-sky-500 hover:text-white hover:bg-sky-500 animation
 }
 
 .auth-forms {
