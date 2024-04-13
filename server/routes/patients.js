@@ -8,28 +8,28 @@ const {
   updatePatient,
 } = require("../controllers/patientController.js");
 const requireAuth = require("../middleware/requireAuth.js")
-
+const requireRole = require("../middleware/requireRole.js")
 
 const router = express.Router();
 
 router.use(requireAuth); // only authenticated users can access these routes
 
 // GET all patients
-router.get("/", getAllPatients);
+router.get("/", requireRole("Doctor"), getAllPatients);
 
 // GET a single patient
 router.get("/:id", getPatient);
 
 // GET patients of a doctor
-router.get("/:doctorId", getPatientsByDoctor);
+router.get("/:doctorId", requireRole("Doctor"), getPatientsByDoctor);
 
 // POST a new patient
-router.post("/", createPatient);
+router.post("/", requireRole("Doctor"), createPatient);
 
 // DELETE a patient
-router.delete("/:id", deletePatient);
+router.delete("/:id", requireRole("Doctor"), deletePatient);
 
 // UPDATE a patient
-router.patch("/:id", updatePatient);
+router.patch("/:id", requireRole("Doctor"), updatePatient);
 
 module.exports = router;
