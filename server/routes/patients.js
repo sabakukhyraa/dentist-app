@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 const {
   getAllPatients,
   getPatient,
@@ -8,6 +7,12 @@ const {
   deletePatient,
   updatePatient,
 } = require("../controllers/patientController.js");
+const requireAuth = require("../middleware/requireAuth.js")
+
+
+const router = express.Router();
+
+router.use(requireAuth); // only authenticated users can access these routes
 
 // GET all patients
 router.get("/", getAllPatients);
