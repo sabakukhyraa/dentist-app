@@ -12,9 +12,14 @@ export default function PatientRegister({ setIsModalOpen }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    password !== passwordAgain
-      ? setError("Passwords do not match.")
-      : await signUpPatient(email, password, patient);
+    if (password !== passwordAgain) {
+      setError("Passwords do not match.")
+    } else {
+      const signedUp = await signUpPatient(email, password, patient);
+      if (signedUp) {
+        setIsModalOpen(false);
+      }
+    }
   };
 
   return (

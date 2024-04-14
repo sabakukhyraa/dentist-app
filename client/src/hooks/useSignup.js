@@ -58,6 +58,7 @@ export const useSignup = () => {
     }
     if (response.ok) {
       setIsLoading(false)
+      return json;
     }
   }
 
