@@ -33,11 +33,15 @@ const getPatient = async (req, res) => {
 
 // GET patients of a doctor
 const getPatientsByDoctor = async (req, res) => {
-  const doctorId = req.user._id;
+  const doctorInfo = await User.findOne({ _id: req.user._id }).select(
+    "doctorInfo"
+  );
   try {
-    const patients = await Patient.find({ doctor: doctorId }).sort({
-      createdAt: -1,
-    });
+    const patients = await Patient.find({ doctor: doctorInfo.doctorInfo }).sort(
+      {
+        createdAt: -1,
+      }
+    );
     res.status(200).json(patients);
   } catch (err) {
     res.status(400).json({ error: err.message });
