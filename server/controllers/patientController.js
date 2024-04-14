@@ -46,10 +46,13 @@ const getPatientsByDoctor = async (req, res) => {
 
 // GET the patients number of a doctor
 const countPatientsByDoctor = async (req, res) => {
-  const doctor = req.user._id;
-
+  const doctorInfo = await User.findOne({ _id: req.user._id }).select(
+    "doctorInfo"
+  );
   try {
-    const count = await Patient.countDocuments({ doctor: doctor });
+    const count = await Patient.countDocuments({
+      doctor: doctorInfo.doctorInfo,
+    });
 
     return res.status(201).json(count)
   } catch (error) { 
