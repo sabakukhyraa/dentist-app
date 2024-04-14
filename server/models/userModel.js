@@ -69,6 +69,12 @@ userCredentialSchema.statics.signUp = async function (
 
     return user;
   } else if (role == "Patient") {
+
+    const patientExists = await this.findOne({ patientInfo: userInfo });
+    if (patientExists) {
+      throw new Error(`This patient already has an account with the email: ${patientExists.email}`);
+    }
+
     const user = this.create({
       email,
       password: hashedPassword,
