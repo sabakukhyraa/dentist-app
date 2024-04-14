@@ -18,7 +18,7 @@ const loginUser = async (req, res) => {
 
     const token = createToken(user._id);
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, role: user.role, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -32,7 +32,7 @@ const signUpDoctorUser = async (req, res) => {
     const user = await User.signUp(email, password, "Doctor", name);
     const token = createToken(user._id)
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, role: "Doctor", token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -46,7 +46,7 @@ const signUpPatientUser = async (req, res) => {
     const user = await User.signUp(email, password, "Patient", patient);
     const token = createToken(user._id);
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, role: "Patient", token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
