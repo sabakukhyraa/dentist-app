@@ -3,6 +3,7 @@ const {
   getAllPatients,
   getPatient,
   getPatientsByDoctor,
+  countPatientsByDoctor,
   createPatient,
   deletePatient,
   updatePatient,
@@ -17,14 +18,17 @@ router.use(requireAuth); // only authenticated users can access these routes
 // GET all patients
 router.get("/all", requireRole("Admin"), getAllPatients);
 
-// GET a single patient
-router.get("/:id", getPatient);
-
 // GET patients of a doctor
 router.get("/", requireRole("Doctor"), getPatientsByDoctor);
 
+// GET the patients number of a doctor
+router.get("/count", requireRole("Doctor"), countPatientsByDoctor);
+
 // POST a new patient
 router.post("/", requireRole("Doctor"), createPatient);
+
+// GET a single patient
+router.get("/:id", getPatient);
 
 // DELETE a patient
 router.delete("/:id", requireRole("Doctor"), deletePatient);

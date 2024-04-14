@@ -43,7 +43,20 @@ const getPatientsByDoctor = async (req, res) => {
   }
 };
 
-// CREATE a new patient
+// GET the patients number of a doctor
+const countPatientsByDoctor = async (req, res) => {
+  const doctor = req.user._id;
+
+  try {
+    const count = await Patient.countDocuments({ doctor: doctor });
+
+    return res.status(201).json(count)
+  } catch (error) { 
+    res.status(400).json({ message: error.message });
+  }
+}
+
+// POST a new patient
 const createPatient = async (req, res) => {
   try {
     const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth } =
@@ -128,6 +141,7 @@ module.exports = {
   getAllPatients,
   getPatient,
   getPatientsByDoctor,
+  countPatientsByDoctor,
   createPatient,
   deletePatient,
   updatePatient,
