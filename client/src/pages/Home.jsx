@@ -3,12 +3,16 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Home() {
-
   const [name, setName] = useState("");
+  const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchDoctorName = async () => {
-      const response = await fetch("http://localhost:4000/api/doctors/");
+      const response = await fetch("http://localhost:4000/api/doctors/", {
+        headers: {
+          Authorization: `Bearer ${auth.user.token}`,
+        },
+      });
       const json = await response.json();
 
       if (response.ok) {
@@ -16,11 +20,10 @@ export default function Home() {
       }
     };
 
-    fetchDoctorName();
-  }, []);
-
-
-  const auth = useSelector((state) => state.auth);
+    if (auth.user) {
+      fetchDoctorName();
+    }
+  }, [auth.user]);
 
   const numberOfPatients = 24; // temporary
   return (

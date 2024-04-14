@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PatientContext } from "../App";
 
 export default function PatientInfo({ isNew = false }) {
+  const auth = useSelector((state) => state.auth);
   const { extractedPatient, setExtractedPatient } = useContext(PatientContext);
 
   const location = useLocation();
@@ -30,75 +31,80 @@ export default function PatientInfo({ isNew = false }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isNew) {
-      const response = await fetch("http://localhost:4000/api/patients", {
-        method: "POST",
-        body: JSON.stringify(patient),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const json = await response.json();
-
-      if (!response.ok) {
-        setError(json.message);
-      }
-      if (response.ok) {
-        dispatch(resetPatientState());
-        setError(null);
-        setExtractedPatient((old) => !old);
-        dispatch(resetPatientState());
-        navigate("/");
-      }
-    } else {
-      const updatedPatient = {};
-
-      Object.keys(patient).forEach((property) => {
-        if (
-          Object.prototype.hasOwnProperty.call(extractedPatient, property) &&
-          patient[property] !== extractedPatient[property]
-        ) {
-          updatedPatient[property] = patient[property];
-        }
-      });
-
-      // PATCH update to existing patient record
-      const response = await fetch(
-        `http://localhost:4000/api/patients/${patient._id}`,
-        {
-          method: "PATCH",
-          body: JSON.stringify(updatedPatient),
+    if (auth.user) {
+      if (isNew) {
+        const response = await fetch("http://localhost:4000/api/patients", {
+          method: "POST",
+          body: JSON.stringify(patient),
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${auth.user.token}`,
           },
-        }
-      );
-      const json = await response.json();
+        });
 
-      if (!response.ok) {
-        setError(json.message);
-        setExtractedPatient(null);
-      }
-      if (response.ok) {
-        setError(null);
-        setExtractedPatient(null);
-        dispatch(resetPatientState());
-        navigate("/");
+        const json = await response.json();
+
+        if (!response.ok) {
+          setError(json.message);
+        }
+        if (response.ok) {
+          dispatch(resetPatientState());
+          setError(null);
+          setExtractedPatient((old) => !old);
+          dispatch(resetPatientState());
+          navigate("/");
+        }
+      } else {
+        const updatedPatient = {};
+
+        Object.keys(patient).forEach((property) => {
+          if (
+            Object.prototype.hasOwnProperty.call(extractedPatient, property) &&
+            patient[property] !== extractedPatient[property]
+          ) {
+            updatedPatient[property] = patient[property];
+          }
+        });
+
+        // PATCH update to existing patient record
+        const response = await fetch(
+          `http://localhost:4000/api/patients/${patient._id}`,
+          {
+            method: "PATCH",
+            body: JSON.stringify(updatedPatient),
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${auth.user.token}`,
+            },
+          }
+        );
+        const json = await response.json();
+
+        if (!response.ok) {
+          setError(json.message);
+          setExtractedPatient(null);
+        }
+        if (response.ok) {
+          setError(null);
+          setExtractedPatient(null);
+          dispatch(resetPatientState());
+          navigate("/");
+        }
       }
     }
   };
 
-  
   const deletePatient = async () => {
-
     const isConfirmed = window.confirm("Are you sure? This cannot be undone!");
 
-    if (isConfirmed) {
+    if (isConfirmed && auth.user) {
       const response = await fetch(
         `http://localhost:4000/api/patients/${patient._id}`,
         {
           method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${auth.user.token}`,
+          },
         }
       );
 
@@ -109,7 +115,6 @@ export default function PatientInfo({ isNew = false }) {
       }
     }
   };
-
 
   return (
     <form

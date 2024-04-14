@@ -3,8 +3,11 @@ import PatientList from "../components/PatientList";
 import { PatientContext } from "../App";
 import { Link } from "react-router-dom";
 import Icons from "../components/Icons";
+import { useSelector } from "react-redux";
 
 export default function Patients() {
+
+  const auth = useSelector((state) => state.auth);
 
   const [patients, setPatients] = useState([]);
   const [searchKey, setSearchKey] = useState("");
@@ -12,7 +15,11 @@ export default function Patients() {
 
   useEffect(() => {
     const fetchPatients = async () => {
-      const response = await fetch("http://localhost:4000/api/patients");
+      const response = await fetch("http://localhost:4000/api/patients", {
+        headers: {
+          'Authorization': `Bearer ${auth.user.token}`
+        }
+      });
       const json = await response.json();
 
       if (response.ok) {
@@ -20,8 +27,10 @@ export default function Patients() {
       }
     };
 
-    fetchPatients();
-  }, [extractedPatient]);
+    if (auth.user) {
+      fetchPatients();
+    }
+  }, [auth.user, extractedPatient]);
 
   const filteredPatients = patients.filter((p) =>
     p.name.toLowerCase().includes(searchKey.toLowerCase())

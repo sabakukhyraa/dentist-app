@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import { resetPatientState, setState } from "../redux/reducers/patientReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useContext } from "react";
 import { PatientContext } from "../App";
 import Icons from "./Icons";
 export default function PatientList({ patient }) {
+
+  const auth = useSelector((state) => state.auth);
 
   const { setExtractedPatient } = useContext(PatientContext);
 
@@ -25,6 +27,9 @@ const deletePatient = async () => {
       `http://localhost:4000/api/patients/${patient._id}`,
       {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${auth.user.token}`,
+        },
       }
     );
 
