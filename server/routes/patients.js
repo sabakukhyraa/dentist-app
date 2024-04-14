@@ -15,13 +15,13 @@ const router = express.Router();
 router.use(requireAuth); // only authenticated users can access these routes
 
 // GET all patients
-router.get("/", requireRole("Admin"), getAllPatients);
+router.get("/all", requireRole("Admin"), getAllPatients);
 
 // GET a single patient
 router.get("/:id", getPatient);
 
 // GET patients of a doctor
-router.get("/:doctorId", requireRole("Doctor"), getPatientsByDoctor);
+router.get("/", requireRole("Doctor"), getPatientsByDoctor);
 
 // POST a new patient
 router.post("/", requireRole("Doctor"), createPatient);

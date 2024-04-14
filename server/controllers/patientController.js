@@ -32,7 +32,7 @@ const getPatient = async (req, res) => {
 
 // GET patients of a doctor
 const getPatientsByDoctor = async (req, res) => {
-  const { doctorId } = req.params;
+  const doctorId = req.user._id;
   try {
     const patients = await Patient.find({ doctor: doctorId }).sort({
       createdAt: -1,
@@ -46,8 +46,9 @@ const getPatientsByDoctor = async (req, res) => {
 // CREATE a new patient
 const createPatient = async (req, res) => {
   try {
-    const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth, doctor } =
+    const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth } =
       req.body;
+    const doctor = req.user._id
 
     // Verify data from request
     if (!name || !birthDate) {
