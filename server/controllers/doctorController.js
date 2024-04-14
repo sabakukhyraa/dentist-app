@@ -12,7 +12,6 @@ const createDoctor = async (name) => {
 // GET name of the doctor
 const getDoctorName = async (req, res) => {
   const doctorInfo = req.user.doctorInfo;
-  console.log(doctorInfo);
 
   try {
     const name = await Doctor.findById(doctorInfo.doctorInfo).select("name");

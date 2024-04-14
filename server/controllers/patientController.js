@@ -1,5 +1,6 @@
 const Patient = require("../models/patientModel.js");
 const mongoose = require("mongoose");
+const User = require("../models/userModel.js");
 
 // GET all patients
 const getAllPatients = async (req, res) => {
@@ -59,9 +60,10 @@ const countPatientsByDoctor = async (req, res) => {
 // POST a new patient
 const createPatient = async (req, res) => {
   try {
-    const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth } =
-      req.body;
-    const doctor = req.user._id
+    const { name, birthDate, definedTeeth, isAdult, hasWisdomTeeth } = req.body;
+    const doctorInfo = await User.findOne({ _id: req.user._id }).select(
+      "doctorInfo"
+    );
 
     // Verify data from request
     if (!name || !birthDate) {
@@ -74,7 +76,7 @@ const createPatient = async (req, res) => {
       definedTeeth: [], // empty array
       isAdult,
       hasWisdomTeeth: !!hasWisdomTeeth,
-      doctor,
+      doctor: doctorInfo.doctorInfo,
     });
 
     // fill the empty array with data from front request

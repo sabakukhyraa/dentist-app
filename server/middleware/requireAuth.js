@@ -16,6 +16,9 @@ const requireAuth = async (req, res, next) => {
     const { _id } = jwt.verify(token, process.env.SECRET_STRING);
 
     req.user = await User.findOne({ _id }).select('_id role');
+    if (!req.user) {
+      res.status(400).json({ error: 'Invalid user' })
+    }
 
     next();
 
