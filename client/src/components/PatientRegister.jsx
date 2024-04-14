@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
+import { useSelector } from "react-redux";
 
 export default function PatientRegister({ setIsModalOpen }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
   const { signUpPatient, isLoading, error, setError } = useSignup();
+  const patient = useSelector((state) => state.patient);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     password !== passwordAgain
       ? setError("Passwords do not match.")
-      : await signUpPatient(email, password);
+      : await signUpPatient(email, password, patient);
   };
 
   return (

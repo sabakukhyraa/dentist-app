@@ -207,13 +207,15 @@ export default function PatientInfo({ isNew = false }) {
                 Delete
               </button>
             )}
-            <button
-              className="px-5 py-1 ml-2 text-xl text-white border rounded-md bg-sky-500 hover:bg-white hover:text-sky-500 hover:border-sky-500 animation"
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-            >
-              Create Account for this Patient
-            </button>
+            {!isNew && (
+              <button
+                className="px-5 py-1 ml-2 text-xl text-white border rounded-md bg-sky-500 hover:bg-white hover:text-sky-500 hover:border-sky-500 animation"
+                type="button"
+                onClick={() => setIsModalOpen(true)}
+              >
+                Create Account for this Patient
+              </button>
+            )}
             <button
               className="px-5 py-1 ml-2 text-xl text-white border rounded-md bg-sky-500 hover:bg-white hover:text-sky-500 hover:border-sky-500 animation"
               type="submit"
