@@ -21,7 +21,7 @@ const getPatient = async (req, res) => {
   );
 
   try {
-    const patient = await Patient.find({ _id: patientInfo.patientInfo });
+    const patient = await Patient.findOne({ _id: patientInfo.patientInfo });
 
     if (!patient) {
       return res.status(404).json({ error: "No such patient!" });

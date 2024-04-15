@@ -35,22 +35,24 @@ return (
         <div>
           <label htmlFor="name">Patient Name:</label>
           <input
+            disabled
             className=""
             type="text"
             name="name"
             id="name"
-            value={patient.name}
+            value={patient?.name}
           />
         </div>
         <div>
           <label htmlFor="birthDate">Patient Birth Date:</label>
           <input
+            disabled
             type="date"
             name="birthDate"
             id="birthDate"
             value={
-              patient.birthDate &&
-              new Date(patient.birthDate).toISOString().split("T")[0]
+              patient?.birthDate &&
+              new Date(patient?.birthDate).toISOString().split("T")[0]
             }
           />
         </div>
@@ -59,29 +61,31 @@ return (
             Is Patient an adult?:
           </label>
           <input
+            disabled
             type="checkbox"
             name="isAdult"
             id="isAdult"
-            checked={patient.isAdult}
-            value={patient.isAdult}
+            checked={patient?.isAdult}
+            value={patient?.isAdult}
           />
         </div>
-        <div className={`${!patient.isAdult && "hidden"}`}>
+        <div className={`${!patient?.isAdult && "hidden"}`}>
           <label className="cursor-pointer" htmlFor="hasWisdomTeeth">
             Does the patient have wisdom teeth?:
           </label>
           <input
+            disabled
             type="checkbox"
             name="hasWisdomTeeth"
             id="hasWisdomTeeth"
-            checked={patient.hasWisdomTeeth}
-            value={patient.hasWisdomTeeth}
+            checked={patient?.hasWisdomTeeth}
+            value={patient?.hasWisdomTeeth}
           />
         </div>
       </div>
       <div className="flex justify-center w-full">
         <div className="flex justify-start w-2/3">
-          <Teeth />
+          <Teeth isDisabled={true}/>
         </div>
       </div>
     </div>

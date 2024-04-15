@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import PatientInfo from "./components/PatientInfo.jsx";
+import PatientInfoDisabled from "./components/PatientInfoDisabled.jsx";
 import {
   BrowserRouter as Router,
   Route,
@@ -71,7 +72,7 @@ function App() {
                     auth.user?.role,
                     <Navigate to={"/"} />,
                     <PatientInfo />,
-                    <PatientInfo />
+                    <PatientInfoDisabled />
                   )}
                 />
 

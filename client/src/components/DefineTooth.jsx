@@ -5,11 +5,15 @@ import {
   removeTreatment,
   addTreatment,
 } from "../redux/reducers/definedToothReducer";
-import { addDefinedTeeth, removeDefinedTeeth } from "../redux/reducers/patientReducer";
+import {
+  addDefinedTeeth,
+  removeDefinedTeeth,
+} from "../redux/reducers/patientReducer";
 import { useEffect } from "react";
 export default function DefineTooth({
   setIsModalOpen,
   setToothState,
+  isDisabled,
 }) {
   const definedTooth = useSelector((state) => state.definedTooth);
   const dispatch = useDispatch();
@@ -24,7 +28,7 @@ export default function DefineTooth({
   }
 
   useEffect(() => {
-    if (definedTooth.description || (definedTooth.treatmentsBefore.length > 0)) {
+    if (definedTooth.description || definedTooth.treatmentsBefore.length > 0) {
       dispatch(addDefinedTeeth(definedTooth));
     } else {
       dispatch(removeDefinedTeeth(definedTooth));
@@ -45,12 +49,14 @@ export default function DefineTooth({
             id={`treatment-name-${index}`}
             value={treat}
             onChange={(event) => handleTreatment(event, index, definedTooth)}
+            disabled={isDisabled}
           />
         </div>
         <button
           onClick={() => handleTreatmentRemoval(index)}
           className="w-fit"
           type="button"
+          disabled={isDisabled}
         >
           <svg
             className="ml-1"
@@ -105,12 +111,17 @@ export default function DefineTooth({
           rows={4}
           value={definedTooth.description}
           onChange={handleInput}
+          disabled={isDisabled}
         />
       </div>
       <div className="flex flex-col gap-4 p-4 px-2 rounded">
         <h2 className="">Treatments applied before</h2>
         <ul className="flex flex-col w-full gap-2">{treatments}</ul>
-        <button onClick={() => dispatch(addTreatment())} type="button">
+        <button
+          onClick={() => dispatch(addTreatment())}
+          type="button"
+          disabled={isDisabled}
+        >
           Add Treatment
         </button>
       </div>

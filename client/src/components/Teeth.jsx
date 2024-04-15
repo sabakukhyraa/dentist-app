@@ -9,7 +9,7 @@ import {
   resetToothState,
 } from "../redux/reducers/definedToothReducer.js";
 
-export default function Teeth() {
+export default function Teeth({isDisabled = false}) {
 
   const dispatch = useDispatch();
   const patient = useSelector((state) => state.patient)
@@ -94,6 +94,7 @@ export default function Teeth() {
         <DefineTooth
           setIsModalOpen={setIsModalOpen}
           setToothState={setToothState}
+          isDisabled={isDisabled}
         />
       )}
     </div>
