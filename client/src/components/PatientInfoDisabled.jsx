@@ -1,11 +1,13 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Teeth from "./Teeth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { setState } from "../redux/reducers/patientReducer";
 
 export default function PatientInfoDisabled() {
 
   const auth = useSelector((state) => state.auth);
-  const [patient, setPatient] = useState();
+  const patient = useSelector((state) => state.patient);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchPatientData = async () => {
@@ -17,14 +19,14 @@ export default function PatientInfoDisabled() {
       const json = await response.json();
 
       if (response.ok) {
-        setPatient(json);
+        dispatch(setState(json));
       }
     };
 
     if (auth.user) {
       fetchPatientData();
     }
-  }, [auth.user]);
+  }, [auth.user, dispatch]);
 
 
 return (
