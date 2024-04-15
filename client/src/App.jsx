@@ -52,7 +52,7 @@ function App() {
           <div className="container">
             <div className="w-full min-h-screen">
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={auth.user ? <Home /> : <Navigate to={"/login"} />} />
 
                 <Route
                   path="/my-patients"
