@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import PatientList from "../components/PatientList";
+import PatientList from "../components/PatientListItem";
 import { PatientContext } from "../App";
 import { Link } from "react-router-dom";
 import Icons from "../components/Icons";
