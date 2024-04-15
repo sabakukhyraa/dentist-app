@@ -35,9 +35,27 @@ export default function Home() {
       }
     }
 
-    if (auth.user) {
+    const fetchPatientName = async () => {
+      const response = await fetch(
+        `http://localhost:4000/api/patients/myself?onlyName=true`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        }
+      );
+      const json = await response.json();
+
+      if (response.ok) {
+        setName(json.name);
+      }
+    };
+
+    if (auth.user?.role == "Doctor") {
       fetchDoctorName();
       fetchPatientNumber();
+    } else {
+      fetchPatientName();
     }
   }, [auth.user]);
 
@@ -51,7 +69,7 @@ export default function Home() {
           </span>
         )}
       </h1>
-      {auth.user && (
+      {auth.user?.role == "Doctor" && (
         <h5 className="">
           You have{" "}
           <span className="text-sky-500">
@@ -62,13 +80,19 @@ export default function Home() {
           </span>
         </h5>
       )}
-      {auth.user && (
+      {auth.user?.role == "Doctor" ? (
         <nav className="my-12 space-x-4">
           <Link className="link-button" to={"/my-patients"}>
             <span>Your patients</span>
           </Link>
           <Link className="link-button" to={"/new-patient"}>
             <span>Create new patient</span>
+          </Link>
+        </nav>
+      ) : (
+        <nav className="my-12 space-x-4">
+          <Link className="link-button" to={"/patient"}>
+            Show my patient data
           </Link>
         </nav>
       )}

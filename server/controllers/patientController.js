@@ -21,7 +21,13 @@ const getPatient = async (req, res) => {
   );
 
   try {
-    const patient = await Patient.findOne({ _id: patientInfo.patientInfo });
+    let query = Patient.findOne({ _id: patientInfo.patientInfo });
+
+    if (req.query.onlyName === "true") {
+      query = query.select("name");
+    }
+
+    const patient = await query;
 
     if (!patient) {
       return res.status(404).json({ error: "No such patient!" });
