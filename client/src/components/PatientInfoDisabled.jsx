@@ -8,7 +8,7 @@ export default function PatientInfoDisabled() {
   const [patient, setPatient] = useState();
 
   useEffect(() => {
-    const fetchPatients = async () => {
+    const fetchPatientData = async () => {
       const response = await fetch(`http://localhost:4000/api/patients/myself`, {
         headers: {
           Authorization: `Bearer ${auth.user.token}`,
@@ -22,7 +22,7 @@ export default function PatientInfoDisabled() {
     };
 
     if (auth.user) {
-      fetchPatients();
+      fetchPatientData();
     }
   }, [auth.user]);
 
