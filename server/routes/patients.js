@@ -28,7 +28,7 @@ router.get("/count", requireRole("Doctor"), countPatientsByDoctor);
 router.post("/", requireRole("Doctor"), createPatient);
 
 // GET a single patient
-router.get("/:id", getPatient);
+router.get("/myself", getPatient);
 
 // DELETE a patient
 router.delete("/:id", requireRole("Doctor"), deletePatient);

@@ -16,18 +16,20 @@ const getAllPatients = async (req, res) => {
 
 // GET a single patient
 const getPatient = async (req, res) => {
-  const { id } = req.params;
+  const patientInfo = await User.findOne({ _id: req.user._id }).select(
+    "patientInfo"
+  );
 
-  if (mongoose.Types.ObjectId.isValid(id)) {
-    const patient = await Patient.findById(id);
+  try {
+    const patient = await Patient.find({ _id: patientInfo.patientInfo });
 
     if (!patient) {
       return res.status(404).json({ error: "No such patient!" });
     }
 
     res.status(200).json(patient);
-  } else {
-    res.status(500).json({ error: "Invalid patient ID" });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };
 
