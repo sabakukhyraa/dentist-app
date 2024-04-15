@@ -1,6 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import PatientInfo from "./components/PatientInfo.jsx";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
@@ -13,18 +18,30 @@ export const PatientContext = createContext();
 
 function App() {
   const [extractedPatient, setExtractedPatient] = useState();
-  const patient = useSelector((state) => state.patient);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'))
-    
+    const user = JSON.parse(localStorage.getItem("user"));
+
     if (user) {
       dispatch(loginReducer(user));
     }
-    
   }, [dispatch]);
+
+  const redirectorByAuth = (
+    isUser,
+    role,
+    notUserPath,
+    ifDoctorPath,
+    ifPatientPath
+  ) => {
+    return isUser
+      ? role == "Doctor"
+        ? ifDoctorPath
+        : ifPatientPath
+      : notUserPath;
+  };
 
   return (
     <PatientContext.Provider value={{ extractedPatient, setExtractedPatient }}>
@@ -38,38 +55,35 @@ function App() {
 
                 <Route
                   path="/my-patients"
-                  element={auth.user ? auth.user.role == "Doctor" ? <Patients /> : <Navigate to={"/patient"} /> : <Navigate to={"/"} />}
-                  // Bu logic her route'a uygulanmalı fakat tek tek böyle yazmak can sıkıcı ve fazla kompleks daha iyi bir yol bulunmalı.
+                  element={redirectorByAuth(
+                    auth.user,
+                    auth.user?.role,
+                    <Navigate to={"/"} />,
+                    <Patients />,
+                    <Navigate to={"/patient"} />
+                  )}
                 />
 
                 <Route
                   path="/patient"
-                  element={
-                    auth.user ? (
-                      <PatientInfo
-                        name={patient?.name}
-                        birthDate={patient?.birthDate}
-                        isAdult={patient?.isAdult}
-                        hasWisdomTeeth={patient?.hasWisdomTeeth}
-                        definedTeeth={patient?.definedTeeth}
-                        saveDate={patient?.createdAt}
-                        changeDate={patient?.updatedAt}
-                      />
-                    ) : (
-                      <Navigate to={"/"} />
-                    )
-                  }
+                  element={redirectorByAuth(
+                    auth.user,
+                    auth.user?.role,
+                    <Navigate to={"/"} />,
+                    <PatientInfo />,
+                    <PatientInfo />
+                  )}
                 />
 
                 <Route
                   path="/new-patient"
-                  element={
-                    auth.user ? (
-                      <PatientInfo isNew={true} />
-                    ) : (
-                      <Navigate to={"/"} />
-                    )
-                  }
+                  element={redirectorByAuth(
+                    auth.user,
+                    auth.user?.role,
+                    <Navigate to={"/"} />,
+                    <PatientInfo isNew={true} />,
+                    <Navigate to={"/patient"} />
+                  )}
                 />
 
                 <Route
