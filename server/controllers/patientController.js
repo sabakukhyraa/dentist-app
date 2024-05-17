@@ -14,8 +14,25 @@ const getAllPatients = async (req, res) => {
   }
 };
 
-// GET a single patient
+// GET a patient
 const getPatient = async (req, res) => {
+  const id = req.params.id
+  try {
+    let query = Patient.findOne({ _id: id });
+    const patient = await query;
+
+    if (!patient) {
+      return res.status(404).json({ error: "No such patient!" });
+    }
+
+    res.status(200).json(patient);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// GET logged in patient
+const getUserPatient = async (req, res) => {
   const patientInfo = await User.findOne({ _id: req.user._id }).select(
     "patientInfo"
   );
@@ -67,10 +84,10 @@ const countPatientsByDoctor = async (req, res) => {
     });
 
     return res.status(201).json(count)
-  } catch (error) { 
+  } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}
+};
 
 // POST a new patient
 const createPatient = async (req, res) => {
@@ -156,6 +173,7 @@ const updatePatient = async (req, res) => {
 
 module.exports = {
   getAllPatients,
+  getUserPatient,
   getPatient,
   getPatientsByDoctor,
   countPatientsByDoctor,

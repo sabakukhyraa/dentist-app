@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getAllPatients,
   getPatient,
+  getUserPatient,
   getPatientsByDoctor,
   countPatientsByDoctor,
   createPatient,
@@ -12,6 +13,11 @@ const requireAuth = require("../middleware/requireAuth.js")
 const requireRole = require("../middleware/requireRole.js")
 
 const router = express.Router();
+
+// GET a patient
+router.get("/:id", getPatient);
+
+
 
 router.use(requireAuth); // only authenticated users can access these routes
 
@@ -27,8 +33,8 @@ router.get("/count", requireRole("Doctor"), countPatientsByDoctor);
 // POST a new patient
 router.post("/", requireRole("Doctor"), createPatient);
 
-// GET a single patient
-router.get("/myself", getPatient);
+// GET logged in patient
+router.get("/myself", getUserPatient);
 
 // DELETE a patient
 router.delete("/:id", requireRole("Doctor"), deletePatient);
