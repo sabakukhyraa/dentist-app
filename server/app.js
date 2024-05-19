@@ -12,12 +12,12 @@ app.use(cors())
 // middleware
 app.use(express.json());
 
-app.use((req, res, next) => {
-  console.log(
-    `------------------------\nThe path the request came from: ${req.path}\nRequest method: ${req.method}\n------------------------`
-  );
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log(
+//     `------------------------\nThe path the request came from: ${req.path}\nRequest method: ${req.method}\n------------------------`
+//   );
+//   next();
+// });
 
 //routes
 app.use("/api/patients", patientRoutes);
