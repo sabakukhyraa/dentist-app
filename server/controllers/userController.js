@@ -52,4 +52,4 @@ const signUpPatientUser = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, signUpDoctorUser, signUpPatientUser };
+module.exports = { createToken, loginUser, signUpDoctorUser, signUpPatientUser };
