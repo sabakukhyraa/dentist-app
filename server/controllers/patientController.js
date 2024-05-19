@@ -83,7 +83,7 @@ const countPatientsByDoctor = async (req, res) => {
       doctor: doctorInfo.doctorInfo,
     });
 
-    return res.status(201).json(count)
+    return res.status(200).json(count)
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
