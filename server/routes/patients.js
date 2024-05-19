@@ -15,7 +15,7 @@ const requireRole = require("../middleware/requireRole.js")
 const router = express.Router();
 
 // GET a patient
-router.get("/:id", getPatient);
+router.get("/one/:id", getPatient);
 
 
 

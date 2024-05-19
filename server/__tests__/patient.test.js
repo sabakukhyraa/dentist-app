@@ -9,8 +9,13 @@ beforeAll(async () => {
     dbName: "DentistApp",
   });
   server = app.listen(4000, () => {
-    global.agent = supertest.agent(server);
+    
   });
+
+  await new Promise((resolve) => {
+    server.once('listening', resolve);
+  });
+  global.agent = supertest.agent(server);
 }, 15000);
 afterAll(async () => {
   await mongoose.connection.close();
@@ -39,20 +44,20 @@ const testPatientPayload = { //test patient to create or update
 var createdPatientResponse;
 
 const testId = new mongoose.Types.ObjectId().toString()
-const patientToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjFjNTY4NDk1ZDNiZDZmNDgwYTM4MDkiLCJpYXQiOjE3MTYxMjE5MjYsImV4cCI6MTcxNjM4MTEyNn0.Q-RbAljOj5mqHg4PbxPz3rpf5yvxuS3FS_yNHOMpkus" //test user - patient
-const doctorToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjRhMWNiMDM0ZmMxZGJkMzU2NmFjZWYiLCJpYXQiOjE3MTYxMzMwNDAsImV4cCI6MTcxNjM5MjI0MH0.VXqxOIq-uuoUKIA5YZ_BoelmQxJSUocGgthchQj_PFI" //test user - doctor
+const patientToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjFjNTY4NDk1ZDNiZDZmNDgwYTM4MDkiLCJpYXQiOjE3MTYxNDQ1MjYsImV4cCI6MTcxNjQwMzcyNn0.CSUG3Qqhou6RhFccK-DUvBGX3rdQxu5_UobGJdsJ9H4" //test user - patient
+const doctorToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjQ5MWQ2Yjg5ZjEyMzI0ODM0ODMxYmYiLCJpYXQiOjE3MTYxNDQ2MDIsImV4cCI6MTcxNjQwMzgwMn0.JQ7K3oGU69JpM1kDLJ0J-a8SmBPEV7cF6whEqmrcx4Y" //test user - doctor
 
 describe('GET a patient route test', () => {
   describe('Given the Patient Id doesn\'t exist', () => {
     test('Should return a 404', async () => {
       const patientId = "661cf075c889bb34da6c32b1";
-      await supertest(app).get(`/api/patients/${patientId}`).expect(404);
+      await global.agent.get(`/api/patients/one/${patientId}`).expect(404);
     }, 15000)
   })
   describe('Given the Patient Id does exist', () => {
     test('Should return a 200 status and the patient', async () => {
       const patientId = "661ce987bb64e62bb5c6c74f";
-      const { body, statusCode } = await global.agent.get(`/api/patients/${patientId}`);
+      const { body, statusCode } = await global.agent.get(`/api/patients/one/${patientId}`);
 
       expect(statusCode).toBe(200)
       expect(body._id).toBe(patientId)
@@ -109,7 +114,7 @@ describe('CREATE patient route and Authorization test', () => {
             ],
           },
         ],
-        "doctor": "664a1caf34fc1dbd3566acec",
+        "doctor": "66491d6b89f12324834831bc",
         "hasWisdomTeeth": false,
         "isAdult": true,
         "name": "TEST",
