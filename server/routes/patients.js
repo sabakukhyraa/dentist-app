@@ -22,7 +22,7 @@ router.get("/:id", getPatient);
 router.use(requireAuth); // only authenticated users can access these routes
 
 // GET all patients
-router.get("/all", requireRole("Admin"), getAllPatients);
+router.get("/all", requireRole("Doctor"), getAllPatients);
 
 // GET patients of a doctor
 router.get("/", requireRole("Doctor"), getPatientsByDoctor);
