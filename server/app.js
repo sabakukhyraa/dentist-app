@@ -1,5 +1,4 @@
 require("dotenv").config();
-const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const patientRoutes = require("./routes/patients.js");
@@ -24,19 +23,5 @@ app.use((req, res, next) => {
 app.use("/api/patients", patientRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/doctors", doctorRoutes);
-
-// connect to db
-mongoose
-  .connect(process.env.DB_URL, {
-    dbName: "DentistApp",
-  })
-  .then((result) => {
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is running on port ${process.env.PORT}`);
-    });
-    console.log("Connected to the db!");
-  })
-  .catch((err) => console.log(err));
-
 
 module.exports = app;
