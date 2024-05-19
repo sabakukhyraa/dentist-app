@@ -145,7 +145,7 @@ const deletePatient = async (req, res) => {
 
     res.status(200).json({ patient });
   } else {
-    res.status(500).json({ error: "Invalid patient ID" });
+    res.status(400).json({ error: "Invalid patient ID" });
   }
 };
 
@@ -167,7 +167,7 @@ const updatePatient = async (req, res) => {
 
     res.status(200).json({ patient });
   } else {
-    res.status(500).json({ error: "Invalid patient ID" });
+    res.status(400).json({ error: "Invalid patient ID" });
   }
 };
 
