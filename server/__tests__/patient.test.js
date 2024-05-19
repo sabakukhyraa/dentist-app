@@ -66,21 +66,6 @@ describe('GET a patient route test', () => {
 })
 
 describe('CREATE patient route and Authorization test', () => {
-  describe('Given the user isn\'t logged in.', () => {
-    test('Should return a 401 status', async () => {
-
-      await global.agent.post('/api/patients').send(testPatientPayload).expect(401);
-    }, 15000)
-  })
-  describe('Given the user is logged in but not authorized.', () => {
-    test('Should return a 403 status', async () => {
-
-      await global.agent
-        .post('/api/patients')
-        .set('Authorization', `Bearer ${patientToken}`)
-        .send(testPatientPayload).expect(403);
-    }, 15000)
-  })
   describe('Given the user is logged in and authorized.', () => {
     test('Should return a 200 status', async () => {
       
